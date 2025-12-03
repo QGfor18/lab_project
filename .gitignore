@@ -1,1 +1,30 @@
+# Vivado项目缓存和临时文件
 lab_project.cache/
+lab_project.hw/
+lab_project.ip_user_files/
+lab_project.sim/
+*.jou
+*.log
+*.pb
+
+# 仿真相关临时文件
+*.wdb
+*.xdbg
+*.xsim
+*.exe
+*.obj
+*.btree
+*.mem
+*.rlx
+*.rtti
+*.sdb
+*.svtype
+
+# 编译产物和报告
+webtalk/
+*.html
+*.xml
+*.crash
+*.tcl
+*.bat
+*.ini
