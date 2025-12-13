@@ -1,55 +1,53 @@
-create_clock -period 10.000 -name sys_clk_pin -
-set_property PACKAGE_PIN V1 [get_ports btn_prin
-set_property IOSTANDARD LVCMOS33 [get_ports btn
-set_property IOSTANDARD LVCMOS33 [get_ports {le
-set_property IOSTANDARD LVCMOS33 [get_ports {ke
-set_property IOSTANDARD LVCMOS33 [get_ports clk
-set_property IOSTANDARD LVCMOS33 [get_ports sen
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-set_property IOSTANDARD LVCMOS33 [get_ports uar
-                                               
-# =============================================
-# å¯®æ›¡å‰¼ç¼æˆç•¾ (é–½å î‡® Minisys-1 XC7A100T)              
-# =============================================
-# LED 0-7                                      
-set_property PACKAGE_PIN F6 [get_ports {led[7]}
-set_property PACKAGE_PIN G4 [get_ports {led[6]}
-set_property PACKAGE_PIN G3 [get_ports {led[5]}
-set_property PACKAGE_PIN J4 [get_ports {led[4]}
-set_property PACKAGE_PIN H4 [get_ports {led[3]}
-set_property PACKAGE_PIN J3 [get_ports {led[2]}
-set_property PACKAGE_PIN J2 [get_ports {led[1]}
-set_property PACKAGE_PIN K2 [get_ports {led[0]}
-                                               
-# éŽ·ã„§çˆœå¯®?é? SW0-SW7 (éç‰ˆåµæˆæ’³å†)                     
-set_property PACKAGE_PIN P5 [get_ports {key[7]}
-set_property PACKAGE_PIN P4 [get_ports {key[6]}
-set_property PACKAGE_PIN P3 [get_ports {key[5]}
-set_property PACKAGE_PIN P2 [get_ports {key[4]}
-set_property PACKAGE_PIN R2 [get_ports {key[3]}
-set_property PACKAGE_PIN M4 [get_ports {key[2]}
-set_property PACKAGE_PIN N4 [get_ports {key[1]}
-set_property PACKAGE_PIN R1 [get_ports {key[0]}
-                                               
-# ç»¯è¤ç²ºéƒå •æŒ“                                       
-set_property PACKAGE_PIN P17 [get_ports clk]   
-                                               
-# éŽºÑƒåŸ—æ·‡â€³å½¿                                       
-# send_one -> BTN (å¨‰ã„¦å‰°é”›æ°¬å½²é‘³èŠ¥æ¹éŽ¸å¤æ•­éŽ¶æ §å§©)            
-set_property PACKAGE_PIN R11 [get_ports send_on
-                                               
-# æ¾¶å¶„ç¶…æ·‡â€³å½¿ -> é„çŠ²çš é’é¢è…‘é—‚å¯¸æ®‘éŽ·ã„§çˆœå¯®?é? SW12, SW10        
-set_property PACKAGE_PIN T3 [get_ports uart_tx_
-set_property PACKAGE_PIN T5 [get_ports uart_rx_
-                                               
-# å®¸ãƒ¤ç¶”é˜èˆµ?ä½¹å¯šç»€? -> é„çŠ²çš é’? LED17, LED16             
-set_property PACKAGE_PIN M1 [get_ports uart_tx_
-set_property PACKAGE_PIN K3 [get_ports uart_rx_
-                                               
-# UART æ¶“æ’å½›                                     
+# =============================================================================
+# ÏµÍ³Ê±ÖÓÔ¼Êø (100MHz, ÖÜÆÚ10ns)
+# =============================================================================
+create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} [get_ports clk]
+
+# =============================================================================
+# IOµçÆ½±ê×¼ (LVCMOS 3.3V)
+# =============================================================================
+set_property IOSTANDARD LVCMOS33 [get_ports {led[*]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {key[*]}]
+set_property IOSTANDARD LVCMOS33 [get_ports clk]
+set_property IOSTANDARD LVCMOS33 [get_ports uart_rx_rst_n]
+set_property IOSTANDARD LVCMOS33 [get_ports uart_tx]
+set_property IOSTANDARD LVCMOS33 [get_ports uart_rx]
+set_property IOSTANDARD LVCMOS33 [get_ports btn_print_v1]
+
+# =============================================================================
+# Òý½Å°ó¶¨ (Minisys-1 XC7A100T)
+# =============================================================================
+
+# ÏµÍ³Ê±ÖÓ -> P17
+set_property PACKAGE_PIN P17 [get_ports clk]
+
+# ¸´Î»°´¼ü (Ê¹ÓÃ T5 ²¦Âë¿ª¹Ø)
+set_property PACKAGE_PIN T5 [get_ports uart_rx_rst_n]
+
+# ´òÓ¡´¥·¢°´¼ü -> V1
+set_property PACKAGE_PIN V1 [get_ports btn_print_v1]
+
+# UART ´®¿Ú
 set_property PACKAGE_PIN T4 [get_ports uart_tx]
 set_property PACKAGE_PIN N5 [get_ports uart_rx]
+
+# LED 0-7 (ÕâÀïÎÒÃÇÖ»ÓÃµ½ÁË led[3:0], µ«°ó¶¨È«²¿·ÀÖ¹±¨´í)
+set_property PACKAGE_PIN K2 [get_ports {led[0]}]
+set_property PACKAGE_PIN J2 [get_ports {led[1]}]
+set_property PACKAGE_PIN J3 [get_ports {led[2]}]
+set_property PACKAGE_PIN H4 [get_ports {led[3]}]
+set_property PACKAGE_PIN J4 [get_ports {led[4]}]
+set_property PACKAGE_PIN G3 [get_ports {led[5]}]
+set_property PACKAGE_PIN G4 [get_ports {led[6]}]
+set_property PACKAGE_PIN F6 [get_ports {led[7]}]
+
+# ²¦Âë¿ª¹Ø SW0-SW7
+# key[3:0] Ñ¡Ôñ¾ØÕó, key[4] ÅäÖÃÄ£Ê½
+set_property PACKAGE_PIN R1 [get_ports {key[0]}]
+set_property PACKAGE_PIN N4 [get_ports {key[1]}]
+set_property PACKAGE_PIN M4 [get_ports {key[2]}]
+set_property PACKAGE_PIN R2 [get_ports {key[3]}]
+set_property PACKAGE_PIN P2 [get_ports {key[4]}]
+set_property PACKAGE_PIN P3 [get_ports {key[5]}]
+set_property PACKAGE_PIN P4 [get_ports {key[6]}]
+set_property PACKAGE_PIN P5 [get_ports {key[7]}]
