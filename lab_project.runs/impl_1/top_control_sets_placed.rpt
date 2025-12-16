@@ -1,0 +1,218 @@
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Tue Dec 16 11:20:17 2025
+| Host         : LAPTOP-ME7ESBI0 running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a35t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Flip-Flop Distribution
+3. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |   151 |
+| Unused register locations in slices containing registers |    58 |
++----------------------------------------------------------+-------+
+
+
+2. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              28 |           15 |
+| No           | No                    | Yes                    |              55 |           17 |
+| No           | Yes                   | No                     |              28 |           17 |
+| Yes          | No                    | No                     |             804 |          263 |
+| Yes          | No                    | Yes                    |            1294 |          453 |
+| Yes          | Yes                   | No                     |              45 |           18 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+3. Detailed Control Set Information
+-----------------------------------
+
++----------------+----------------------------------------+--------------------------+------------------+----------------+
+|  Clock Signal  |              Enable Signal             |     Set/Reset Signal     | Slice Load Count | Bel Load Count |
++----------------+----------------------------------------+--------------------------+------------------+----------------+
+|  clk_IBUF_BUFG | u_tx/tx_i_1_n_0                        | u_calc/done_reg_0        |                1 |              1 |
+|  clk_IBUF_BUFG | u_ctrl/tx_state[3]_i_1_n_0             | u_calc/done_reg_0        |                1 |              4 |
+|  clk_IBUF_BUFG | u_rx/bit_idx0                          | u_calc/done_reg_0        |                1 |              4 |
+|  clk_IBUF_BUFG | u_ctrl/c_cnt[2]_i_1_n_0                |                          |                2 |              4 |
+|  clk_IBUF_BUFG | u_ctrl/c_cnt[2]_i_1_n_0                | u_ctrl/rd_idx[4]_i_1_n_0 |                1 |              4 |
+|  clk_IBUF_BUFG | u_ctrl/data_cnt                        | u_calc/done_reg_0        |                2 |              5 |
+|  clk_IBUF_BUFG | u_calc/row_cnt[4]_i_1_n_0              | u_calc/done_reg_0        |                3 |              5 |
+|  clk_IBUF_BUFG | u_ctrl/E[0]                            | u_calc/done_reg_0        |                3 |              5 |
+|  clk_IBUF_BUFG | u_calc/col_cnt[4]_i_1_n_0              | u_calc/done_reg_0        |                2 |              5 |
+|  clk_IBUF_BUFG | u_calc/k_cnt[4]_i_1_n_0                | u_calc/done_reg_0        |                2 |              5 |
+|  clk_IBUF_BUFG | u_ctrl/result_dim_reg[0]_1[0]          | u_calc/done_reg_0        |                2 |              6 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][8][7]_i_1_n_0     |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][6][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][10][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][14][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][24][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][2][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][5][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][22][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][3][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][4][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][15][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][19][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][13][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][20][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][7][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][3][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][15][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][1][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][0][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][23][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][2][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][11][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][24][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][21][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][5][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][14][7]_i_1_n_0    |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][22][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][17][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][4][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][6][7]_i_1_n_0     |                          |                6 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/scalar_buffer                   | u_calc/done_reg_0        |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/scalar_value[7]_i_1_n_0         | u_calc/done_reg_0        |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][18][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][16][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/tx_data[7]_i_1_n_0              | u_calc/done_reg_0        |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][12][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_rx/rx_data[7]_i_1_n_0                | u_calc/done_reg_0        |                1 |              8 |
+|  clk_IBUF_BUFG | u_rx/num_buffer_reg[7][0]              | u_calc/done_reg_0        |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][1][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][7][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][23][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][9][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][24][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][2][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][20][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][8][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][22][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][10][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][15][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][16][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][6][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][8][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][4][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][13][7]_i_1_n_0    |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][18][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][12][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][5][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][9][7]_i_1_n_0     |                          |                6 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][11][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][17][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][19][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][21][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][3][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[3][14][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][21][7]_i_1_n_0    |                          |                6 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][10][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][11][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][15][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][16][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][18][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][19][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][14][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][1][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][21][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][12][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][13][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][22][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][17][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][0][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][20][7]_i_1_n_0    |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][24][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][6][7]_i_1_n_0     |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][18][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][1][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][5][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][8][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][9][7]_i_1_n_0     |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][13][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][4][7]_i_1_n_0     |                          |                5 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][16][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][23][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][7][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][0][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][23][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][2][7]_i_1_n_0     |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[2][10][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][17][7]_i_1_n_0    |                          |                4 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][19][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][9][7]_i_1_n_0     |                          |                3 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][12][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][3][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][11][7]_i_1_n_0    |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][20][7]_i_1_n_0    |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[0][7][7]_i_1_n_0     |                          |                2 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/matrix_mem[1][0][7]_i_1_n_0     |                          |                1 |              8 |
+|  clk_IBUF_BUFG | u_ctrl/baud_cnt_reg[9][0]              | u_calc/done_reg_0        |                3 |             10 |
+|  clk_IBUF_BUFG | u_tx/tx_shift                          | u_calc/done_reg_0        |                5 |             13 |
+|  clk_IBUF_BUFG | u_calc/res_mat[0][15]_i_1_n_0          | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[15][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[12][15]_i_1_n_0         | u_calc/done_reg_0        |                4 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[11][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[14][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[10][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[13][15]_i_1_n_0         | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[23][15]_i_1_n_0         | u_calc/done_reg_0        |                8 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[17][15]_i_1_n_0         | u_calc/done_reg_0        |                8 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[16][15]_i_1_n_0         | u_calc/done_reg_0        |                5 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[19][15]_i_1_n_0         | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[24][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[20][15]_i_1_n_0         | u_calc/done_reg_0        |                4 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[1][15]_i_1_n_0          | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[21][15]_i_1_n_0         | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[22][15]_i_1_n_0         | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[4][15]_i_1_n_0          | u_calc/done_reg_0        |                5 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[7][15]_i_1_n_0          | u_calc/done_reg_0        |                8 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[6][15]_i_1_n_0          | u_calc/done_reg_0        |                8 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[8][15]_i_1_n_0          | u_calc/done_reg_0        |                7 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[9][15]_i_1_n_0          | u_calc/done_reg_0        |                5 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[3][15]_i_1_n_0          | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[5][15]_i_1_n_0          | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[2][15]_i_1_n_0          | u_calc/done_reg_0        |                4 |             16 |
+|  clk_IBUF_BUFG | u_calc/mul_acc[0]_i_1_n_0              | u_calc/done_reg_0        |                4 |             16 |
+|  clk_IBUF_BUFG | u_rx/baud_cnt[15]_i_1_n_0              | u_calc/done_reg_0        |                5 |             16 |
+|  clk_IBUF_BUFG | u_calc/res_mat[18][15]_i_1_n_0         | u_calc/done_reg_0        |                6 |             16 |
+|  clk_IBUF_BUFG |                                        |                          |               15 |             28 |
+|  clk_IBUF_BUFG | u_ctrl/stored_m0_out                   |                          |                5 |             40 |
+|  clk_IBUF_BUFG | u_ctrl/stored_n_reg_r1_0_3_0_2_i_1_n_0 |                          |                5 |             40 |
+|  clk_IBUF_BUFG |                                        | u_calc/done_reg_0        |               34 |             83 |
+|  clk_IBUF_BUFG | u_calc/mat_b[0][7]_i_1_n_0             | u_calc/done_reg_0        |              147 |            400 |
+|  clk_IBUF_BUFG | u_calc/result_data[399]_i_1_n_0        | u_calc/done_reg_0        |              119 |            400 |
++----------------+----------------------------------------+--------------------------+------------------+----------------+
+
+
++--------+-----------------------+
+| Fanout | Number of ControlSets |
++--------+-----------------------+
+| 1      |                     1 |
+| 4      |                     4 |
+| 5      |                     5 |
+| 6      |                     1 |
+| 8      |                   105 |
+| 10     |                     1 |
+| 13     |                     1 |
+| 16+    |                    33 |
++--------+-----------------------+
+
+

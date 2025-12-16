@@ -4,55 +4,93 @@ module matrix_io_ctrl(
     input wire clk,
     input wire rst_n,
     
-    // UART ½Ó¿Ú
+    // UART æ¥å£
     input wire [7:0] rx_data,
     input wire rx_done,
     output reg [7:0] tx_data,
     output reg tx_start,
     input wire tx_busy,
     
-    // ¿ØÖÆ½Ó¿Ú
-    input wire print_trigger,    // Ïû¶¶ºóµÄ V1 °´¼üĞÅºÅ
-    input wire [3:0] sw_select,  // SW3-SW0 Ñ¡ÔñÊä³ö¾ØÕó
-    input wire config_en,        // SW4 ÅäÖÃÄ£Ê½Ê¹ÄÜ
-    output wire [3:0] led        // LED3-LED0 ÏÔÊ¾´æ´¢×´Ì¬
+    // æ§åˆ¶æ¥å£
+    input wire print_trigger,    // æ‰“å°è§¦å‘æŒ‰é’® V1
+    input wire [3:0] sw_select,  // SW3-SW0 é€‰æ‹©è¾“å‡ºçŸ©é˜µ
+    input wire config_en,        // é…ç½®æ¨¡å¼ä½¿èƒ½ (U2)
+    input wire calc_trigger,     // è®¡ç®—è§¦å‘æŒ‰é’® (V2)
+    input wire [3:0] btn_op,     // è¿ç®—æ¨¡å¼æŒ‰é’®ç¼–ç  (V3-V6)
+    output wire [7:0] led,       // LED7-LED0 æ˜¾ç¤ºçŠ¶æ€
+    
+    // è®¡ç®—æ¨¡å—æ¥å£
+    output reg calc_start,           // å¯åŠ¨è®¡ç®—
+    output reg [3:0] operation_type, // è¿ç®—ç±»å‹
+    output reg [5:0] matrix_a_dim,   // çŸ©é˜µAç»´åº¦
+    output reg [5:0] matrix_b_dim,   // çŸ©é˜µBç»´åº¦
+    output reg [7:0] scalar_value,   // æ ‡é‡å€¼
+    output reg [199:0] matrix_a_data,// çŸ©é˜µAæ•°æ®
+    output reg [199:0] matrix_b_data,// çŸ©é˜µBæ•°æ®
+    input wire [399:0] result_data,  // è®¡ç®—ç»“æœ
+    input wire [5:0] result_dim,     // ç»“æœç»´åº¦
+    input wire calc_done,            // è®¡ç®—å®Œæˆ
+    input wire calc_error            // è®¡ç®—é”™è¯¯
 );
 
     // ==========================================
-    // 1. ´æ´¢Óë²ÎÊı¶¨Òå
+    // 1. ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     // ==========================================
-    // ÎïÀíÓ²¼şÉÏÏŞ (Hard Limit)£¬´úÂëĞ´ËÀÎª4£¬²»ÄÜ¶¯Ì¬¸Ä´ó
+    // ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Hard Limit)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½Îª4ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½Ì¬ï¿½Ä´ï¿½
     localparam MAX_PHYSICAL_CAP = 4; 
     
-    reg [7:0] matrix_mem [0:MAX_PHYSICAL_CAP-1][0:24]; // 4¸ö¾ØÕó, Ã¿¸ö×î´ó25ÔªËØ
-    reg [2:0] stored_m [0:MAX_PHYSICAL_CAP-1];         // ´æ´¢ĞĞÊı
-    reg [2:0] stored_n [0:MAX_PHYSICAL_CAP-1];         // ´æ´¢ÁĞÊı
+    reg [7:0] matrix_mem [0:MAX_PHYSICAL_CAP-1][0:24]; // 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½25Ôªï¿½ï¿½
+    reg [2:0] stored_m [0:MAX_PHYSICAL_CAP-1];         // ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½
+    reg [2:0] stored_n [0:MAX_PHYSICAL_CAP-1];         // ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½
     
-    reg [2:0] wr_ptr;                 // Ğ´Ö¸Õë
-    reg [MAX_PHYSICAL_CAP-1:0] valid_mask; // ÓĞĞ§Î»±ê¼Ç
-    reg [4:0] data_cnt;               // Êı¾İ¼ÆÊıÆ÷
+    reg [2:0] wr_ptr;                 // Ğ´Ö¸ï¿½ï¿½
+    reg [MAX_PHYSICAL_CAP-1:0] valid_mask; // ï¿½ï¿½Ğ§Î»ï¿½ï¿½ï¿½
+    reg [4:0] data_cnt;               // ï¿½ï¿½ï¿½İ¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // [Âß¼­×î´óÊıÁ¿] ÓÃ»§¿ÉÍ¨¹ı UART ĞŞ¸Ä£¬Ä¬ÈÏÖµÎª 2
+    // [ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½Ã»ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ UART ï¿½Ş¸Ä£ï¿½Ä¬ï¿½ï¿½ÖµÎª 2
     reg [2:0] max_cnt; 
 
-    // LED ÏÔÊ¾£ºÏÔÊ¾ÓĞĞ§Êı¾İ£¬µ«±» max_cnt ÑÚÂëÏŞÖÆ (ÀıÈçÉèÎª2Ê±£¬LED2/3²»»áÁÁ)
-    assign led = valid_mask & ((1 << max_cnt) - 1);
+    // LED æ˜¾ç¤ºé€»è¾‘
+    // led[3:0]: æ˜¾ç¤ºæœ‰æ•ˆçŸ©é˜µå­˜å‚¨çŠ¶æ€
+    // led[4]: è®¡ç®—æ¨¡å¼æŒ‡ç¤º
+    // led[5]: è®¡ç®—è¿›è¡Œä¸­
+    // led[6]: è®¡ç®—å®Œæˆ
+    // led[7]: è®¡ç®—é”™è¯¯
+    assign led[3:0] = valid_mask & ((1 << max_cnt) - 1);
+    assign led[4] = (rx_state == S_CALC_MODE);
+    assign led[5] = calc_busy;
+    assign led[6] = calc_done_flag;
+    assign led[7] = calc_error_flag;
 
     // ==========================================
-    // 2. ÊäÈë½âÎöÓë¿ØÖÆ×´Ì¬»ú
+    // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½
     // ==========================================
     localparam S_RX_IDLE    = 0;
     localparam S_RX_GET_M   = 1;
     localparam S_RX_GET_N   = 2;
     localparam S_RX_DATA    = 3;
-    localparam S_RX_CONFIG  = 4; // ÅäÖÃÄ£Ê½×´Ì¬
+    localparam S_RX_CONFIG  = 4; // é…ç½®æ¨¡å¼çŠ¶æ€
+    localparam S_CALC_MODE  = 5; // è®¡ç®—æ¨¡å¼çŠ¶æ€
+    localparam S_CALC_WAIT  = 6; // ç­‰å¾…è®¡ç®—å®Œæˆ
+    localparam S_CALC_STORE = 7; // å­˜å‚¨è®¡ç®—ç»“æœ
     
     reg [2:0] rx_state;
     reg [7:0] num_buffer;
     reg       num_valid;
+    
+    // è®¡ç®—ç›¸å…³å¯„å­˜å™¨
+    reg [1:0] calc_step;          // è®¡ç®—å‚æ•°æ¥æ”¶æ­¥éª¤
+    reg [1:0] matrix_a_idx;       // çŸ©é˜µAç´¢å¼•
+    reg [1:0] matrix_b_idx;       // çŸ©é˜µBç´¢å¼•
+    reg [1:0] result_idx;         // ç»“æœå­˜å‚¨ç´¢å¼•
+    reg [7:0] scalar_buffer;      // æ ‡é‡å€¼ç¼“å­˜
+    reg calc_trigger_stable;      // è®¡ç®—è§¦å‘ç¨³å®šä¿¡å·
+    reg calc_busy;                // è®¡ç®—è¿›è¡Œä¸­æ ‡å¿—
+    reg calc_done_flag;           // è®¡ç®—å®Œæˆæ ‡å¿—
+    reg calc_error_flag;          // è®¡ç®—é”™è¯¯æ ‡å¿—
 
-    // --- ASCII ½âÎöÂß¼­ ---
-    always @(posedge clk or negedge rst_n) begin
+    // --- ASCII è§£æé€»è¾‘ ---
+    always @(posedge clk) begin
         if(!rst_n) begin
             num_buffer <= 0;
             num_valid <= 0;
@@ -60,30 +98,73 @@ module matrix_io_ctrl(
             num_valid <= 0;
             if(rx_done) begin
                 if(rx_data >= "0" && rx_data <= "9") begin
-                    num_buffer <= rx_data - "0"; 
+                    num_buffer <= rx_data - "0";
                 end
-                // Óöµ½¿Õ¸ñ»ò»Ø³µÈÏÎªÊı×ÖÊäÈë½áÊø
+                // ç©ºæ ¼ã€ç©ºæ ¼ã€å›è½¦éƒ½ä½œä¸ºæ•°å­—åˆ†éš”ç¬¦
                 else if(rx_data == " " || rx_data == 8'h0D || rx_data == 8'h0A) begin
-                    num_valid <= 1; 
+                    num_valid <= 1;
                 end
             end
         end
     end
 
-    // --- ºËĞÄ¿ØÖÆÂß¼­ ---
-    always @(posedge clk or negedge rst_n) begin
+    // --- æŒ‰é’®å»æŠ–é€»è¾‘ ---
+    reg calc_trig_d1, calc_trig_d2;
+    wire calc_trig_pos = calc_trig_d1 & ~calc_trig_d2;
+    always @(posedge clk) begin
+        calc_trig_d1 <= calc_trigger;
+        calc_trig_d2 <= calc_trig_d1;
+    end
+    
+    // --- çŸ©é˜µæ§åˆ¶é€»è¾‘ ---
+    always @(posedge clk) begin
         if(!rst_n) begin
             rx_state <= S_RX_IDLE;
             wr_ptr <= 0;
             valid_mask <= 0;
             data_cnt <= 0;
-            max_cnt <= 2; // [Ä¬ÈÏÖµ] ¸´Î»ºóÄ¬ÈÏ´æ2¸ö
+            max_cnt <= 2; // [é»˜è®¤å€¼] å¤ä½æ—¶é»˜è®¤å­˜2ä¸ª
+            
+            // è®¡ç®—ç›¸å…³åˆå§‹åŒ–
+            calc_step <= 0;
+            matrix_a_idx <= 0;
+            matrix_b_idx <= 0;
+            result_idx <= 0;
+            scalar_buffer <= 0;
+            calc_busy <= 0;
+            calc_done_flag <= 0;
+            calc_error_flag <= 0;
+            calc_start <= 0;
+            operation_type <= 0;
+            scalar_value <= 0;
         end else begin
-            // Ç¿ÖÆ½øÈëÅäÖÃÄ£Ê½Âß¼­ (SW4 ÓÅÏÈ¼¶×î¸ß)
-            if (config_en && rx_state != S_RX_CONFIG) begin
+            // è®¡ç®—å®Œæˆæ ‡å¿—æ¸…é™¤
+            if (calc_done_flag) calc_done_flag <= 0;
+            if (calc_error_flag) calc_error_flag <= 0;
+            
+            // å¼ºåˆ¶è¿›å…¥é…ç½®æ¨¡å¼é€»è¾‘ (config_en ä¼˜å…ˆçº§æœ€é«˜)
+            if (config_en && rx_state != S_RX_CONFIG && rx_state != S_CALC_MODE) begin
                 rx_state <= S_RX_CONFIG;
+                calc_step <= 0;
             end
+            // å¼ºåˆ¶è¿›å…¥è®¡ç®—æ¨¡å¼é€»è¾‘ (é€šè¿‡æŒ‰é’®ç¼–ç è¿›å…¥)
+            else if (btn_op != 0 && rx_state != S_CALC_MODE && rx_state != S_RX_CONFIG) begin
+                rx_state <= S_CALC_MODE;
+                calc_step <= 0;
+                // æŒ‰é’®ç¼–ç æ˜ å°„åˆ°è¿ç®—ç±»å‹
+                case(btn_op)
+                    4'b0001: operation_type <= 4'd0;  // V3(R3) â†’ è½¬ç½®
+                    4'b0010: operation_type <= 4'd1;  // V4 â†’ åŠ æ³•
+                    4'b0100: operation_type <= 4'd2;  // V5 â†’ æ ‡é‡ä¹˜
+                    4'b1000: operation_type <= 4'd3;  // V6(V2) â†’ çŸ©é˜µä¹˜
+                    default: operation_type <= 4'd0;
+                endcase
+            end
+            // é€€å‡ºç‰¹æ®Šæ¨¡å¼
             else if (!config_en && rx_state == S_RX_CONFIG) begin
+                rx_state <= S_RX_IDLE;
+            end
+            else if (btn_op == 0 && rx_state == S_CALC_MODE) begin
                 rx_state <= S_RX_IDLE;
             end
             else begin
@@ -91,7 +172,7 @@ module matrix_io_ctrl(
                     S_RX_IDLE: begin
                         if(num_valid) begin
                             stored_m[wr_ptr] <= num_buffer[2:0];
-                            // Î¬¶È¼ì²é 1~5
+                            // ç»´åº¦æ£€æŸ¥ 1~5
                             if(num_buffer > 0 && num_buffer <= 5) rx_state <= S_RX_GET_N;
                         end
                     end
@@ -107,18 +188,18 @@ module matrix_io_ctrl(
                     
                     S_RX_DATA: begin
                         if(num_valid) begin
-                            // Ó²¼ş±£»¤£º·ÀÖ¹Ô½½çĞ´Èë
+                            // ç¡¬ä»¶è¾¹ç•Œæ£€æŸ¥é˜²æ­¢è¶Šç•Œå†™å…¥
                             if(wr_ptr < MAX_PHYSICAL_CAP)
                                 matrix_mem[wr_ptr][data_cnt] <= num_buffer;
                             
-                            // ÅĞ¶Ï¾ØÕóÊÇ·ñÌîÂú
+                            // åˆ¤æ–­çŸ©é˜µæ˜¯å¦æ¥æ”¶å®Œæˆ
                             if(data_cnt == (stored_m[wr_ptr] * stored_n[wr_ptr]) - 1) begin
                                 valid_mask[wr_ptr] <= 1'b1;
                                 
-                                // [»ØÈÆÂß¼­] »ùÓÚÓÃ»§Éè¶¨µÄ max_cnt
-                                if(wr_ptr >= max_cnt - 1) 
+                                // [å¾ªç¯é€»è¾‘] æ ¹æ®ç”¨æˆ·è®¾å®šçš„ max_cnt
+                                if(wr_ptr >= max_cnt - 1)
                                     wr_ptr <= 0;
-                                else 
+                                else
                                     wr_ptr <= wr_ptr + 1;
                                     
                                 rx_state <= S_RX_IDLE;
@@ -128,18 +209,92 @@ module matrix_io_ctrl(
                         end
                     end
 
-                    // [ÅäÖÃÄ£Ê½Âß¼­]
+                    // [é…ç½®æ¨¡å¼é€»è¾‘]
                     S_RX_CONFIG: begin
                         if(num_valid) begin
-                            // ÊäÈëÖµÇ¯Î»£º²»ÄÜ³¬¹ıÎïÀíÉÏÏŞ 4£¬²»ÄÜĞ¡ÓÚ 1
+                            // é…ç½®å€¼é’³ä½ï¼Œä¸èƒ½è¶…è¿‡ç¡¬ä»¶å®¹é‡4ï¼Œä¸èƒ½å°äº1
                             if(num_buffer == 0) max_cnt <= 1;
                             else if(num_buffer <= MAX_PHYSICAL_CAP) max_cnt <= num_buffer[2:0];
-                            else max_cnt <= MAX_PHYSICAL_CAP; 
+                            else max_cnt <= MAX_PHYSICAL_CAP;
                             
-                            // ÅäÖÃ¸Ä±äºó£¬ÖØÖÃÖ¸ÕëºÍÊı¾İ
+                            // é…ç½®æ”¹å˜åé‡ç½®æŒ‡é’ˆå’Œæœ‰æ•ˆä½
                             wr_ptr <= 0;
-                            valid_mask <= 0; 
+                            valid_mask <= 0;
                         end
+                    end
+                    
+                    // [è®¡ç®—æ¨¡å¼é€»è¾‘]
+                    S_CALC_MODE: begin
+                        if(num_valid) begin
+                            case(calc_step)
+                                0: begin // æ¥æ”¶çŸ©é˜µAç´¢å¼•
+                                    matrix_a_idx <= num_buffer[1:0];
+                                    calc_step <= 1;
+                                end
+                                1: begin // æ¥æ”¶çŸ©é˜µBç´¢å¼•
+                                    matrix_b_idx <= num_buffer[1:0];
+                                    calc_step <= 2;
+                                end
+                                2: begin // æ¥æ”¶æ ‡é‡å€¼ï¼ˆå¦‚æœéœ€è¦ï¼‰
+                                    scalar_buffer <= num_buffer;
+                                    calc_step <= 3;
+                                end
+                                3: begin // æ¥æ”¶ç»“æœå­˜å‚¨ä½ç½®
+                                    result_idx <= num_buffer[1:0];
+                                    calc_step <= 0;
+                                    // ç­‰å¾…è®¡ç®—è§¦å‘
+                                end
+                            endcase
+                        end
+                        
+                        // è®¡ç®—è§¦å‘
+                        if (calc_trig_pos && !calc_busy) begin
+                            // æ£€æŸ¥çŸ©é˜µæœ‰æ•ˆæ€§
+                            if (valid_mask[matrix_a_idx] &&
+                                (operation_type != 1 && operation_type != 3 || valid_mask[matrix_b_idx])) begin
+                                calc_busy <= 1;
+                                calc_start <= 1;
+                                // è®¾ç½®è®¡ç®—å‚æ•°
+                                scalar_value <= scalar_buffer;
+                                // åˆ‡æ¢åˆ°ç­‰å¾…çŠ¶æ€
+                                rx_state <= S_CALC_WAIT;
+                            end
+                        end
+                    end
+                    
+                    // [ç­‰å¾…è®¡ç®—å®Œæˆ]
+                    S_CALC_WAIT: begin
+                        calc_start <= 0;
+                        if (calc_done) begin
+                            calc_busy <= 0;
+                            if (calc_error) begin
+                                calc_error_flag <= 1;
+                                rx_state <= S_CALC_MODE;
+                            end else begin
+                                rx_state <= S_CALC_STORE;
+                            end
+                        end
+                    end
+                    
+                    // [å­˜å‚¨è®¡ç®—ç»“æœ]
+                    S_CALC_STORE: begin
+                        // å­˜å‚¨ç»“æœçŸ©é˜µæ•°æ®ã€ç»´åº¦å’Œæœ‰æ•ˆä½
+                        if (!calc_error) begin
+                            // å­˜å‚¨è®¡ç®—ç»“æœåˆ°çŸ©é˜µå­˜å‚¨å™¨
+                            for (i = 0; i < 25; i = i + 1) begin
+                                // å–ä½8ä½ï¼ˆé¥±å’Œå¤„ç†ï¼šå¦‚æœå¤§äº255åˆ™æˆªæ–­ä¸º255ï¼‰
+                                if (result_data[i*16 +: 16] > 255)
+                                    matrix_mem[result_idx][i] <= 8'd255;
+                                else
+                                    matrix_mem[result_idx][i] <= result_data[i*16 +: 8];
+                            end
+                            // å­˜å‚¨ç»“æœçŸ©é˜µç»´åº¦
+                            stored_m[result_idx] <= result_dim[5:3];
+                            stored_n[result_idx] <= result_dim[2:0];
+                            valid_mask[result_idx] <= 1'b1;
+                        end
+                        calc_done_flag <= 1;
+                        rx_state <= S_CALC_MODE;
                     end
                 endcase
             end
@@ -147,7 +302,7 @@ module matrix_io_ctrl(
     end
 
     // ==========================================
-    // 3. Êä³ö¸ñÊ½»¯×´Ì¬»ú
+    // 3. ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½×´Ì¬ï¿½ï¿½
     // ==========================================
     localparam T_IDLE       = 0;
     localparam T_PRINT_NUM  = 1;
@@ -164,12 +319,12 @@ module matrix_io_ctrl(
     reg [4:0] rd_idx;
     reg [2:0] r_cnt, c_cnt;
 
-    // ±ßÑØ¼ì²â´òÓ¡´¥·¢ĞÅºÅ
+    // ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½
     reg trig_d1, trig_d2;
     wire trig_pos = trig_d1 & ~trig_d2;
     always @(posedge clk) begin trig_d1 <= print_trigger; trig_d2 <= trig_d1; end
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if(!rst_n) begin
             tx_state <= T_IDLE;
             tx_start <= 0; tx_data <= 0;
@@ -178,8 +333,8 @@ module matrix_io_ctrl(
             case(tx_state)
                 T_IDLE: begin
                     if(trig_pos) begin
-                        // ¼ì²é¿ª¹ØÑ¡Ôñ & Êı¾İÓĞĞ§ĞÔ & max_cnt ÏŞÖÆ
-                        // ÓÅÏÈ¼¶£ºSW0 > SW1 > SW2 > SW3
+                        // ï¿½ï¿½é¿ªï¿½ï¿½Ñ¡ï¿½ï¿½ & ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ & max_cnt ï¿½ï¿½ï¿½ï¿½
+                        // ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½SW0 > SW1 > SW2 > SW3
                         if(sw_select[0] && valid_mask[0] && max_cnt >= 1) begin
                             rd_ptr <= 0; tx_state <= T_PRINT_NUM;
                         end else if(sw_select[1] && valid_mask[1] && max_cnt >= 2) begin
@@ -189,7 +344,7 @@ module matrix_io_ctrl(
                         end else if(sw_select[3] && valid_mask[3] && max_cnt >= 4) begin
                             rd_ptr <= 3; tx_state <= T_PRINT_NUM;
                         end
-                        // ³õÊ¼»¯´òÓ¡¼ÆÊıÆ÷
+                        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         rd_idx <= 0; r_cnt <= 0; c_cnt <= 0;
                     end
                 end
@@ -207,7 +362,7 @@ module matrix_io_ctrl(
 
                 T_WAIT_SP: begin
                     if(!tx_busy) begin
-                        // ÁĞ½áÊø?
+                        // ï¿½Ğ½ï¿½ï¿½ï¿½?
                         if(c_cnt == stored_n[rd_ptr] - 1) tx_state <= T_PRINT_CR;
                         else begin
                             c_cnt <= c_cnt + 1; rd_idx <= rd_idx + 1; tx_state <= T_PRINT_NUM;
@@ -221,8 +376,8 @@ module matrix_io_ctrl(
 
                 T_WAIT_LF: begin
                     if(!tx_busy) begin
-                        // ĞĞ½áÊø?
-                        if(r_cnt == stored_m[rd_ptr] - 1) tx_state <= T_IDLE; // ´òÓ¡Íê³É
+                        // ï¿½Ğ½ï¿½ï¿½ï¿½?
+                        if(r_cnt == stored_m[rd_ptr] - 1) tx_state <= T_IDLE; // ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½
                         else begin
                             c_cnt <= 0; r_cnt <= r_cnt + 1; rd_idx <= rd_idx + 1; tx_state <= T_PRINT_NUM;
                         end
@@ -231,4 +386,25 @@ module matrix_io_ctrl(
             endcase
         end
     end
+    
+    // ==========================================
+    // 4. æ•°æ®æ‰“åŒ…é€»è¾‘ï¼ˆå°†å­˜å‚¨çš„çŸ©é˜µæ‰“åŒ…æˆè®¡ç®—æ¨¡å—éœ€è¦çš„æ ¼å¼ï¼‰
+    // ==========================================
+    integer i;
+    always @(*) begin
+        // æ‰“åŒ…çŸ©é˜µAæ•°æ®
+        for (i = 0; i < 25; i = i + 1) begin
+            matrix_a_data[i*8 +: 8] = matrix_mem[matrix_a_idx][i];
+        end
+        
+        // æ‰“åŒ…çŸ©é˜µBæ•°æ®
+        for (i = 0; i < 25; i = i + 1) begin
+            matrix_b_data[i*8 +: 8] = matrix_mem[matrix_b_idx][i];
+        end
+        
+        // è®¾ç½®çŸ©é˜µç»´åº¦
+        matrix_a_dim = {stored_m[matrix_a_idx], stored_n[matrix_a_idx]};
+        matrix_b_dim = {stored_m[matrix_b_idx], stored_n[matrix_b_idx]};
+    end
+    
 endmodule

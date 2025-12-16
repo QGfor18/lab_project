@@ -1,62 +1,121 @@
 `timescale 1ns / 1ps
 
 module top(
-    input wire clk,             // 100MHz ÏµÍ³Ê±ÖÓ
-    input wire uart_rx,         // ´®¿Ú½ÓÊÕÒı½Å
-    output wire uart_tx,        // ´®¿Ú·¢ËÍÒı½Å
+    input wire clk,             // 100MHz ç³»ç»Ÿæ—¶é’Ÿ
+    input wire uart_rx,         // ä¸²å£æ¥æ”¶
+    output wire uart_tx,        // ä¸²å£å‘é€
     input wire [7:0] key,       // SW7-SW0
-                                // key[3:0]: Ñ¡ÔñÊä³ö¾ØÕó
-                                // key[4]:   ½øÈëÅäÖÃÄ£Ê½
+                                // key[3:0]: é€‰æ‹©è¾“å‡ºçŸ©é˜µ
+                                // key[4]:   é…ç½®æ¨¡å¼
     output wire [7:0] led,      // LED7-LED0
-                                // led[3:0]: ÏÔÊ¾¾ØÕó´æ´¢×´Ì¬
-    input wire uart_rx_rst_n,   // ¸´Î»°´¼ü (T5)
-    input wire btn_print_v1     // ´òÓ¡´¥·¢°´¼ü (V1)
+                                // led[3:0]: æ˜¾ç¤ºçŸ©é˜µå­˜å‚¨çŠ¶æ€
+    input wire uart_rx_rst_n,   // å¤ä½ä¿¡å· (T5)
+    input wire btn_print_v1,    // æ‰“å°è§¦å‘æŒ‰é’® (V1)
+    input wire config_en,       // é…ç½®æ¨¡å¼ä½¿èƒ½ (U2)
+    input wire btn_calc_u3,     // è®¡ç®—è§¦å‘æŒ‰é’® (U3)
+    input wire btn_op0,         // è¿ç®—æ¨¡å¼æŒ‰é’®0 (R3)
+    input wire btn_op1,         // è¿ç®—æ¨¡å¼æŒ‰é’®1 (V4)
+    input wire btn_op2,         // è¿ç®—æ¨¡å¼æŒ‰é’®2 (V5)
+    input wire btn_op3          // è¿ç®—æ¨¡å¼æŒ‰é’®3 (V2)
 );
     
-    // ÄÚ²¿ĞÅºÅÁ¬½Ó
+    // å†…éƒ¨ä¿¡å·å®šä¹‰
     wire [7:0] rx_data;
     wire rx_done;
     wire [7:0] tx_data;
     wire tx_start;
     wire tx_busy;
     
-    wire btn_print_stable; // Ïû¶¶ºóµÄ°´¼üĞÅºÅ
+    wire btn_print_stable;   // æ‰“å°æŒ‰é’®å»æŠ–ä¿¡å·
+    wire btn_calc_stable;    // è®¡ç®—æŒ‰é’®å»æŠ–ä¿¡å·
     
-    // === 1. ÊµÀı»¯ °´¼üÏû¶¶Ä£¿é (´úÂë¼ûÏÂ·½) ===
-    debounce u_db (
+    // è®¡ç®—æ¨¡å—æ¥å£ä¿¡å·
+    wire calc_start;
+    wire [3:0] operation_type;
+    wire [5:0] matrix_a_dim;
+    wire [5:0] matrix_b_dim;
+    wire [7:0] scalar_value;
+    wire [199:0] matrix_a_data;
+    wire [199:0] matrix_b_data;
+    wire [399:0] result_data;
+    wire [5:0] result_dim;
+    wire calc_done;
+    wire calc_error;
+    
+    // æŒ‰é’®ç¼–ç ç»„åˆ
+    wire [3:0] btn_op = {btn_op3, btn_op2, btn_op1, btn_op0};
+    
+    // === 1. å®ä¾‹åŒ– æŒ‰é’®å»æŠ–æ¨¡å— (é˜²æŠ–ç”µè·¯) ===
+    debounce u_db_print (
         .clk(clk),
         .rst_n(uart_rx_rst_n),
         .btn_in(btn_print_v1),
         .btn_out(btn_print_stable)
     );
     
-    // === 2. ÊµÀı»¯ UART ½ÓÊÕ ===
+    debounce u_db_calc (
+        .clk(clk),
+        .rst_n(uart_rx_rst_n),
+        .btn_in(btn_calc_u3),
+        .btn_out(btn_calc_stable)
+    );
+    
+    // === 2. å®ä¾‹åŒ– UART æ¥æ”¶ ===
     uart_rx #( .CLK_FREQ(100_000_000), .BAUD_RATE(115200) ) u_rx (
         .clk(clk), .rst_n(uart_rx_rst_n),
         .rx(uart_rx), .rx_data(rx_data), .rx_done(rx_done)
     );
     
-    // === 3. ÊµÀı»¯ UART ·¢ËÍ ===
+    // === 3. å®ä¾‹åŒ– UART å‘é€ ===
     uart_tx #( .CLK_FREQ(100_000_000), .BAUD_RATE(115200) ) u_tx (
         .clk(clk), .rst_n(uart_rx_rst_n),
         .tx_start(tx_start), .tx_data(tx_data),
         .tx(uart_tx), .tx_busy(tx_busy)
     );
     
-    // === 4. ÊµÀı»¯ ºËĞÄ¿ØÖÆÄ£¿é ===
+    // === 4. å®ä¾‹åŒ– çŸ©é˜µè®¡ç®—å™¨ ===
+    matrix_calculator u_calc (
+        .clk(clk),
+        .rst_n(uart_rx_rst_n),
+        .start(calc_start),
+        .operation_type(operation_type),
+        .matrix_a_dim(matrix_a_dim),
+        .matrix_b_dim(matrix_b_dim),
+        .scalar_value(scalar_value),
+        .matrix_a_data(matrix_a_data),
+        .matrix_b_data(matrix_b_data),
+        .result_data(result_data),
+        .result_dim(result_dim),
+        .done(calc_done),
+        .error(calc_error)
+    );
+    
+    // === 5. å®ä¾‹åŒ– çŸ©é˜µIOæ§åˆ¶æ¨¡å— ===
     matrix_io_ctrl u_ctrl (
         .clk(clk), .rst_n(uart_rx_rst_n),
         .rx_data(rx_data), .rx_done(rx_done),
         .tx_data(tx_data), .tx_start(tx_start), .tx_busy(tx_busy),
         
-        .print_trigger(btn_print_stable), // Ê¹ÓÃÏû¶¶ºóµÄ V1
-        .sw_select(key[3:0]),             // SW0-SW3 Ñ¡ÔñÊä³ö
-        .config_en(key[4]),               // SW4 ¿ªÆôÅäÖÃÄ£Ê½
-        .led(led[3:0])                    // LED ÏÔÊ¾×´Ì¬
+        .print_trigger(btn_print_stable), // ä½¿ç”¨å»æŠ–åçš„ V1
+        .sw_select(key[3:0]),             // SW0-SW3 é€‰æ‹©çŸ©é˜µ
+        .config_en(config_en),            // é…ç½®æ¨¡å¼ä½¿èƒ½ (U2)
+        .calc_trigger(btn_calc_stable),   // è®¡ç®—è§¦å‘æŒ‰é’® (U3)
+        .btn_op(btn_op),                  // è¿ç®—æ¨¡å¼æŒ‰é’®ç¼–ç  (R3,V4,V5,V2)
+        .led(led),                        // LED æ˜¾ç¤ºçŠ¶æ€
+        
+        // è®¡ç®—æ¨¡å—æ¥å£
+        .calc_start(calc_start),
+        .operation_type(operation_type),
+        .matrix_a_dim(matrix_a_dim),
+        .matrix_b_dim(matrix_b_dim),
+        .scalar_value(scalar_value),
+        .matrix_a_data(matrix_a_data),
+        .matrix_b_data(matrix_b_data),
+        .result_data(result_data),
+        .result_dim(result_dim),
+        .calc_done(calc_done),
+        .calc_error(calc_error)
     );
-    
-    // ¹Ø±ÕÎ´Ê¹ÓÃµÄ LED
-    assign led[7:4] = 4'b0000;
     
 endmodule
 `timescale 1ns / 1ps
