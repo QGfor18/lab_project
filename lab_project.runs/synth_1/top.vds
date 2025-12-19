@@ -2,12 +2,12 @@
 # Vivado v2017.4 (64-bit)
 # SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
 # IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
-# Start of session at: Tue Dec 16 11:17:58 2025
-# Process ID: 148092
-# Current directory: D:/Angle/Documents/vivado_projects/lab_project/lab_project.runs/synth_1
+# Start of session at: Fri Dec 19 16:38:00 2025
+# Process ID: 27584
+# Current directory: D:/digital/lab_project/lab_project.runs/synth_1
 # Command line: vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
-# Log file: D:/Angle/Documents/vivado_projects/lab_project/lab_project.runs/synth_1/top.vds
-# Journal file: D:/Angle/Documents/vivado_projects/lab_project/lab_project.runs/synth_1\vivado.jou
+# Log file: D:/digital/lab_project/lab_project.runs/synth_1/top.vds
+# Journal file: D:/digital/lab_project/lab_project.runs/synth_1\vivado.jou
 #-----------------------------------------------------------
 source top.tcl -notrace
 Command: synth_design -top top -part xc7a35tcsg324-1
@@ -15,35 +15,35 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 142064 
+INFO: Helper process launched with PID 27024 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 330.707 ; gain = 100.430
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 330.707 ; gain = 100.328
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'top' [D:/Angle/Documents/vivado_projects/lab_project/top.v:3]
-INFO: [Synth 8-638] synthesizing module 'debounce' [D:/Angle/Documents/vivado_projects/lab_project/top.v:123]
+INFO: [Synth 8-638] synthesizing module 'top' [D:/digital/lab_project/top.v:3]
+INFO: [Synth 8-638] synthesizing module 'debounce' [D:/digital/lab_project/top.v:123]
 	Parameter CNT_MAX bound to: 2000000 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'debounce' (1#1) [D:/Angle/Documents/vivado_projects/lab_project/top.v:123]
-INFO: [Synth 8-638] synthesizing module 'uart_rx' [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:23]
+INFO: [Synth 8-256] done synthesizing module 'debounce' (1#1) [D:/digital/lab_project/top.v:123]
+INFO: [Synth 8-638] synthesizing module 'uart_rx' [D:/digital/lab_project/uart_rx.v:23]
 	Parameter CLK_FREQ bound to: 100000000 - type: integer 
 	Parameter BAUD_RATE bound to: 115200 - type: integer 
 	Parameter BAUD_DIV bound to: 868 - type: integer 
-INFO: [Synth 8-155] case statement is not full and has no default [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:68]
-WARNING: [Synth 8-5788] Register rx_shift_reg in module uart_rx is has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:70]
-INFO: [Synth 8-256] done synthesizing module 'uart_rx' (2#1) [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:23]
-INFO: [Synth 8-638] synthesizing module 'uart_tx' [D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v:23]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/digital/lab_project/uart_rx.v:68]
+WARNING: [Synth 8-5788] Register rx_shift_reg in module uart_rx is has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/digital/lab_project/uart_rx.v:70]
+INFO: [Synth 8-256] done synthesizing module 'uart_rx' (2#1) [D:/digital/lab_project/uart_rx.v:23]
+INFO: [Synth 8-638] synthesizing module 'uart_tx' [D:/digital/lab_project/uart_tx.v:23]
 	Parameter CLK_FREQ bound to: 100000000 - type: integer 
 	Parameter BAUD_RATE bound to: 115200 - type: integer 
 	Parameter BAUD_DIV bound to: 868 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'uart_tx' (3#1) [D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v:23]
-INFO: [Synth 8-638] synthesizing module 'matrix_calculator' [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:2]
+INFO: [Synth 8-256] done synthesizing module 'uart_tx' (3#1) [D:/digital/lab_project/uart_tx.v:23]
+INFO: [Synth 8-638] synthesizing module 'matrix_calculator' [D:/digital/lab_project/project_operation.v:2]
 	Parameter IDLE bound to: 3'b000 
 	Parameter LOAD_DATA bound to: 3'b001 
 	Parameter CALCULATE bound to: 3'b010 
 	Parameter OUTPUT_RES bound to: 3'b011 
-INFO: [Synth 8-155] case statement is not full and has no default [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:91]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:118]
-INFO: [Synth 8-256] done synthesizing module 'matrix_calculator' (4#1) [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:2]
-INFO: [Synth 8-638] synthesizing module 'matrix_io_ctrl' [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:3]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/digital/lab_project/project_operation.v:93]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/digital/lab_project/project_operation.v:122]
+INFO: [Synth 8-256] done synthesizing module 'matrix_calculator' (4#1) [D:/digital/lab_project/project_operation.v:2]
+INFO: [Synth 8-638] synthesizing module 'matrix_io_ctrl' [D:/digital/lab_project/matrix_io_ctrl.v.v:3]
 	Parameter MAX_PHYSICAL_CAP bound to: 4 - type: integer 
 	Parameter S_RX_IDLE bound to: 0 - type: integer 
 	Parameter S_RX_GET_M bound to: 1 - type: integer 
@@ -54,24 +54,32 @@ INFO: [Synth 8-638] synthesizing module 'matrix_io_ctrl' [D:/Angle/Documents/viv
 	Parameter S_CALC_WAIT bound to: 6 - type: integer 
 	Parameter S_CALC_STORE bound to: 7 - type: integer 
 	Parameter T_IDLE bound to: 0 - type: integer 
-	Parameter T_PRINT_NUM bound to: 1 - type: integer 
-	Parameter T_WAIT_NUM bound to: 2 - type: integer 
-	Parameter T_PRINT_SP bound to: 3 - type: integer 
-	Parameter T_WAIT_SP bound to: 4 - type: integer 
-	Parameter T_PRINT_CR bound to: 5 - type: integer 
-	Parameter T_WAIT_CR bound to: 6 - type: integer 
-	Parameter T_PRINT_LF bound to: 7 - type: integer 
-	Parameter T_WAIT_LF bound to: 8 - type: integer 
-INFO: [Synth 8-155] case statement is not full and has no default [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:171]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:333]
-INFO: [Synth 8-256] done synthesizing module 'matrix_io_ctrl' (5#1) [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:3]
-INFO: [Synth 8-256] done synthesizing module 'top' (6#1) [D:/Angle/Documents/vivado_projects/lab_project/top.v:3]
+	Parameter T_LOAD_NUM bound to: 1 - type: integer 
+	Parameter T_PRINT_H bound to: 2 - type: integer 
+	Parameter T_WAIT_H bound to: 3 - type: integer 
+	Parameter T_PRINT_T bound to: 4 - type: integer 
+	Parameter T_WAIT_T bound to: 5 - type: integer 
+	Parameter T_PRINT_U bound to: 6 - type: integer 
+	Parameter T_WAIT_U bound to: 7 - type: integer 
+	Parameter T_PRINT_SP bound to: 8 - type: integer 
+	Parameter T_WAIT_SP bound to: 9 - type: integer 
+	Parameter T_PRINT_CR bound to: 10 - type: integer 
+	Parameter T_WAIT_CR bound to: 11 - type: integer 
+	Parameter T_PRINT_LF bound to: 12 - type: integer 
+	Parameter T_WAIT_LF bound to: 13 - type: integer 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/digital/lab_project/matrix_io_ctrl.v.v:207]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/digital/lab_project/matrix_io_ctrl.v.v:395]
+WARNING: [Synth 8-6014] Unused sequential element result_idx_reg was removed.  [D:/digital/lab_project/matrix_io_ctrl.v.v:158]
+WARNING: [Synth 8-6014] Unused sequential element calc_error_flag_reg was removed.  [D:/digital/lab_project/matrix_io_ctrl.v.v:162]
+WARNING: [Synth 8-6014] Unused sequential element print_val_reg was removed.  [D:/digital/lab_project/matrix_io_ctrl.v.v:381]
+INFO: [Synth 8-256] done synthesizing module 'matrix_io_ctrl' (5#1) [D:/digital/lab_project/matrix_io_ctrl.v.v:3]
+INFO: [Synth 8-256] done synthesizing module 'top' (6#1) [D:/digital/lab_project/top.v:3]
 WARNING: [Synth 8-3331] design top has unconnected port key[7]
 WARNING: [Synth 8-3331] design top has unconnected port key[6]
 WARNING: [Synth 8-3331] design top has unconnected port key[5]
 WARNING: [Synth 8-3331] design top has unconnected port key[4]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 432.438 ; gain = 202.160
+Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 426.164 ; gain = 195.785
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -81,44 +89,44 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 432.438 ; gain = 202.160
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 426.164 ; gain = 195.785
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcsg324-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [D:/Angle/Documents/vivado_projects/lab_project/top.xdc]
-Finished Parsing XDC File [D:/Angle/Documents/vivado_projects/lab_project/top.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/Angle/Documents/vivado_projects/lab_project/top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Parsing XDC File [D:/digital/lab_project/top.xdc]
+Finished Parsing XDC File [D:/digital/lab_project/top.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/digital/lab_project/top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 768.207 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 761.980 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 768.207 ; gain = 537.930
+Finished Constraint Validation : Time (s): cpu = 00:00:25 ; elapsed = 00:00:29 . Memory (MB): peak = 761.980 ; gain = 531.602
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 768.207 ; gain = 537.930
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:25 ; elapsed = 00:00:29 . Memory (MB): peak = 761.980 ; gain = 531.602
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 768.207 ; gain = 537.930
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:29 . Memory (MB): peak = 761.980 ; gain = 531.602
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "bit_idx" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5544] ROM "rx_busy" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
-WARNING: [Synth 8-6014] Unused sequential element bit_idx_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:52]
+WARNING: [Synth 8-6014] Unused sequential element bit_idx_reg was removed.  [D:/digital/lab_project/uart_rx.v:52]
 INFO: [Synth 8-5544] ROM "tx_busy" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
-WARNING: [Synth 8-6014] Unused sequential element bit_idx_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v:44]
+WARNING: [Synth 8-6014] Unused sequential element bit_idx_reg was removed.  [D:/digital/lab_project/uart_tx.v:44]
 INFO: [Synth 8-5546] ROM "res_mat_reg[0]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "res_mat_reg[0]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "res_mat_reg[0]" won't be mapped to RAM because it is too sparse
@@ -195,8 +203,11 @@ INFO: [Synth 8-5546] ROM "res_mat_reg[24]" won't be mapped to RAM because it is 
 INFO: [Synth 8-5546] ROM "res_mat_reg[24]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "res_mat_reg[24]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5544] ROM "current_state" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
-WARNING: [Synth 8-6014] Unused sequential element k_cnt_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:50]
-INFO: [Synth 8-5544] ROM "stored_m" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element k_cnt_reg was removed.  [D:/digital/lab_project/project_operation.v:50]
+INFO: [Synth 8-5544] ROM "stored_m_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5546] ROM "matrix_mem_reg[0][0]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "matrix_mem_reg[0][1]" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "matrix_mem_reg[0][2]" won't be mapped to RAM because it is too sparse
@@ -223,12 +234,26 @@ INFO: [Synth 8-5546] ROM "matrix_mem_reg[0][22]" won't be mapped to RAM because 
 INFO: [Synth 8-5546] ROM "matrix_mem_reg[0][23]" won't be mapped to RAM because it is too sparse
 INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Synth 8-5544] ROM "operation_type" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "matrix_mem_reg[0][0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "matrix_mem_reg[1][0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "matrix_mem_reg[2][0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "matrix_mem_reg[3][0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "stored_m_reg[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "operation_type" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "rx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "rx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "rx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "rx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "calc_step" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "matrix_a_idx" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "matrix_b_idx" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "scalar_buffer" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "output_result_flag" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "tx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "tx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "tx_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "digit_h" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 768.207 ; gain = 537.930
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:30 ; elapsed = 00:00:35 . Memory (MB): peak = 761.980 ; gain = 531.602
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -246,58 +271,57 @@ Detailed RTL Component Info :
 	   2 Input     16 Bit       Adders := 1     
 	   2 Input     10 Bit       Adders := 1     
 	   2 Input      9 Bit       Adders := 1     
-	   2 Input      8 Bit       Adders := 2     
-	   2 Input      5 Bit       Adders := 7     
-	   2 Input      4 Bit       Adders := 3     
+	   2 Input      8 Bit       Adders := 1     
+	   2 Input      5 Bit       Adders := 6     
+	   2 Input      4 Bit       Adders := 2     
 	   2 Input      3 Bit       Adders := 3     
 +---Registers : 
 	              400 Bit    Registers := 1     
 	               21 Bit    Registers := 2     
 	               16 Bit    Registers := 28    
-	               10 Bit    Registers := 2     
-	                8 Bit    Registers := 155   
+	               10 Bit    Registers := 1     
+	                9 Bit    Registers := 1     
+	                8 Bit    Registers := 180   
 	                6 Bit    Registers := 1     
 	                5 Bit    Registers := 6     
-	                4 Bit    Registers := 5     
-	                3 Bit    Registers := 4     
-	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 23    
-+---RAMs : 
-	               12 Bit         RAMs := 2     
+	                4 Bit    Registers := 7     
+	                3 Bit    Registers := 16    
+	                2 Bit    Registers := 5     
+	                1 Bit    Registers := 28    
 +---Muxes : 
 	   2 Input     21 Bit        Muxes := 4     
 	   2 Input     16 Bit        Muxes := 4     
 	   4 Input     16 Bit        Muxes := 1     
 	   4 Input     10 Bit        Muxes := 1     
-	   2 Input     10 Bit        Muxes := 5     
-	   8 Input      8 Bit        Muxes := 25    
-	   2 Input      8 Bit        Muxes := 25    
+	   2 Input     10 Bit        Muxes := 4     
+	   2 Input      9 Bit        Muxes := 1     
 	   4 Input      8 Bit        Muxes := 75    
-	  10 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 26    
 	   2 Input      6 Bit        Muxes := 1     
 	   4 Input      6 Bit        Muxes := 1     
-	   2 Input      5 Bit        Muxes := 8     
+	   2 Input      5 Bit        Muxes := 7     
 	   4 Input      5 Bit        Muxes := 4     
 	   8 Input      5 Bit        Muxes := 1     
-	  10 Input      5 Bit        Muxes := 1     
-	   2 Input      4 Bit        Muxes := 9     
-	   8 Input      4 Bit        Muxes := 1     
-	   2 Input      3 Bit        Muxes := 21    
-	   4 Input      3 Bit        Muxes := 2     
-	   8 Input      3 Bit        Muxes := 3     
-	  10 Input      3 Bit        Muxes := 2     
-	   9 Input      3 Bit        Muxes := 1     
-	   2 Input      2 Bit        Muxes := 5     
-	   8 Input      2 Bit        Muxes := 2     
-	   5 Input      2 Bit        Muxes := 2     
-	   4 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 301   
+	  15 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 10    
+	   8 Input      4 Bit        Muxes := 2     
+	   2 Input      3 Bit        Muxes := 23    
+	   4 Input      3 Bit        Muxes := 9     
+	  15 Input      3 Bit        Muxes := 2     
+	   3 Input      3 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 7     
+	   5 Input      2 Bit        Muxes := 1     
+	   4 Input      2 Bit        Muxes := 2     
+	   3 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 305   
 	   5 Input      1 Bit        Muxes := 1     
 	   3 Input      1 Bit        Muxes := 1     
-	   4 Input      1 Bit        Muxes := 74    
+	   4 Input      1 Bit        Muxes := 72    
 	   9 Input      1 Bit        Muxes := 1     
-	   8 Input      1 Bit        Muxes := 118   
-	  10 Input      1 Bit        Muxes := 5     
+	  15 Input      1 Bit        Muxes := 11    
+	   8 Input      1 Bit        Muxes := 124   
+	  16 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -342,18 +366,19 @@ Detailed RTL Component Info :
 	   2 Input      4 Bit       Adders := 1     
 +---Registers : 
 	               16 Bit    Registers := 1     
-	               10 Bit    Registers := 1     
+	                9 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
 	                1 Bit    Registers := 2     
 +---Muxes : 
-	   2 Input     10 Bit        Muxes := 3     
+	   2 Input     10 Bit        Muxes := 2     
+	   2 Input      9 Bit        Muxes := 1     
 	   2 Input      4 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 6     
 Module matrix_calculator 
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input      9 Bit       Adders := 1     
-	   2 Input      5 Bit       Adders := 5     
+	   2 Input      5 Bit       Adders := 4     
 +---Registers : 
 	              400 Bit    Registers := 1     
 	               16 Bit    Registers := 26    
@@ -367,52 +392,49 @@ Detailed RTL Component Info :
 	   4 Input     16 Bit        Muxes := 1     
 	   2 Input      6 Bit        Muxes := 1     
 	   4 Input      6 Bit        Muxes := 1     
-	   2 Input      5 Bit        Muxes := 8     
+	   2 Input      5 Bit        Muxes := 7     
 	   4 Input      5 Bit        Muxes := 4     
 	   2 Input      3 Bit        Muxes := 2     
 	   4 Input      3 Bit        Muxes := 2     
 	   2 Input      2 Bit        Muxes := 2     
-	   2 Input      1 Bit        Muxes := 147   
-	   4 Input      1 Bit        Muxes := 69    
+	   2 Input      1 Bit        Muxes := 145   
+	   4 Input      1 Bit        Muxes := 68    
 	   9 Input      1 Bit        Muxes := 1     
 Module matrix_io_ctrl 
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input     32 Bit       Adders := 3     
-	   2 Input      8 Bit       Adders := 2     
+	   2 Input      8 Bit       Adders := 1     
 	   2 Input      5 Bit       Adders := 2     
-	   2 Input      4 Bit       Adders := 1     
 	   2 Input      3 Bit       Adders := 3     
 +---Registers : 
-	                8 Bit    Registers := 104   
+	                8 Bit    Registers := 129   
 	                5 Bit    Registers := 2     
-	                4 Bit    Registers := 3     
-	                3 Bit    Registers := 3     
-	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 9     
-+---RAMs : 
-	               12 Bit         RAMs := 2     
+	                4 Bit    Registers := 5     
+	                3 Bit    Registers := 15    
+	                2 Bit    Registers := 5     
+	                1 Bit    Registers := 14    
 +---Muxes : 
-	   8 Input      8 Bit        Muxes := 25    
-	   2 Input      8 Bit        Muxes := 25    
 	   4 Input      8 Bit        Muxes := 75    
-	  10 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 26    
 	   8 Input      5 Bit        Muxes := 1     
-	  10 Input      5 Bit        Muxes := 1     
-	   2 Input      4 Bit        Muxes := 7     
-	   8 Input      4 Bit        Muxes := 1     
-	   2 Input      3 Bit        Muxes := 19    
-	   8 Input      3 Bit        Muxes := 3     
-	  10 Input      3 Bit        Muxes := 2     
-	   9 Input      3 Bit        Muxes := 1     
-	   2 Input      2 Bit        Muxes := 3     
-	   8 Input      2 Bit        Muxes := 2     
-	   5 Input      2 Bit        Muxes := 2     
-	   4 Input      2 Bit        Muxes := 1     
-	   8 Input      1 Bit        Muxes := 118   
-	  10 Input      1 Bit        Muxes := 5     
-	   2 Input      1 Bit        Muxes := 146   
-	   4 Input      1 Bit        Muxes := 4     
+	  15 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 8     
+	   8 Input      4 Bit        Muxes := 2     
+	   4 Input      3 Bit        Muxes := 7     
+	   2 Input      3 Bit        Muxes := 21    
+	  15 Input      3 Bit        Muxes := 2     
+	   3 Input      3 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 1     
+	   5 Input      2 Bit        Muxes := 1     
+	   4 Input      2 Bit        Muxes := 2     
+	   2 Input      2 Bit        Muxes := 5     
+	   3 Input      2 Bit        Muxes := 1     
+	  15 Input      1 Bit        Muxes := 11    
+	   8 Input      1 Bit        Muxes := 124   
+	   2 Input      1 Bit        Muxes := 150   
+	   4 Input      1 Bit        Muxes := 3     
+	  16 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
 ---------------------------------------------------------------------------------
@@ -428,18 +450,28 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-6014] Unused sequential element mul_acc_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:52]
-WARNING: [Synth 8-6014] Unused sequential element k_cnt_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/project_operation.v:50]
-WARNING: [Synth 8-6014] Unused sequential element u_rx/bit_idx_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v:52]
-WARNING: [Synth 8-6014] Unused sequential element u_tx/bit_idx_reg was removed.  [D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v:44]
+WARNING: [Synth 8-6014] Unused sequential element mul_acc_reg was removed.  [D:/digital/lab_project/project_operation.v:52]
+WARNING: [Synth 8-6014] Unused sequential element k_cnt_reg was removed.  [D:/digital/lab_project/project_operation.v:50]
+WARNING: [Synth 8-6014] Unused sequential element u_rx/bit_idx_reg was removed.  [D:/digital/lab_project/uart_rx.v:52]
+WARNING: [Synth 8-6014] Unused sequential element u_tx/bit_idx_reg was removed.  [D:/digital/lab_project/uart_tx.v:44]
 WARNING: [Synth 8-3331] design top has unconnected port key[7]
 WARNING: [Synth 8-3331] design top has unconnected port key[6]
 WARNING: [Synth 8-3331] design top has unconnected port key[5]
 WARNING: [Synth 8-3331] design top has unconnected port key[4]
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\u_tx/tx_shift_reg[9] )
+INFO: [Synth 8-3886] merging instance 'u_ctrl/tx_data_reg[7]' (FDRE) to 'u_ctrl/tx_data_reg[6]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\u_tx/tx_shift_reg[8] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_ctrl/\tx_data_reg[6] )
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[6]__0' (FDRE) to 'u_ctrl/num_buffer_reg[6]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[5]__0' (FDRE) to 'u_ctrl/num_buffer_reg[5]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[0]__0' (FDRE) to 'u_ctrl/num_buffer_reg[0]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[3]__0' (FDRE) to 'u_ctrl/num_buffer_reg[3]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[1]__0' (FDRE) to 'u_ctrl/num_buffer_reg[1]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[4]__0' (FDRE) to 'u_ctrl/num_buffer_reg[4]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[2]__0' (FDRE) to 'u_ctrl/num_buffer_reg[2]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_calc/\current_state_reg[2] )
-INFO: [Synth 8-3886] merging instance 'u_ctrl/operation_type_reg[3]' (FDRE) to 'u_ctrl/operation_type_reg[2]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_ctrl/\operation_type_reg[2] )
+INFO: [Synth 8-3886] merging instance 'u_ctrl/num_buffer_reg[7]__0' (FDRE) to 'u_ctrl/num_buffer_reg[7]'
+INFO: [Synth 8-3886] merging instance 'u_ctrl/operation_type_reg[2]' (FDRE) to 'u_ctrl/operation_type_reg[3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_ctrl/\operation_type_reg[3] )
 INFO: [Synth 8-3886] merging instance 'u_tx/baud_cnt_reg[13]' (FDCE) to 'u_tx/baud_cnt_reg[15]'
 INFO: [Synth 8-3886] merging instance 'u_tx/baud_cnt_reg[15]' (FDCE) to 'u_tx/baud_cnt_reg[14]'
 INFO: [Synth 8-3886] merging instance 'u_tx/baud_cnt_reg[14]' (FDCE) to 'u_tx/baud_cnt_reg[12]'
@@ -447,29 +479,14 @@ INFO: [Synth 8-3886] merging instance 'u_tx/baud_cnt_reg[12]' (FDCE) to 'u_tx/ba
 INFO: [Synth 8-3886] merging instance 'u_tx/baud_cnt_reg[10]' (FDCE) to 'u_tx/baud_cnt_reg[11]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_tx/baud_cnt_reg[11] )
 WARNING: [Synth 8-3332] Sequential element (current_state_reg[2]) is unused and will be removed from module matrix_calculator.
-WARNING: [Synth 8-3332] Sequential element (operation_type_reg[2]) is unused and will be removed from module matrix_io_ctrl.
+WARNING: [Synth 8-3332] Sequential element (operation_type_reg[3]) is unused and will be removed from module matrix_io_ctrl.
+WARNING: [Synth 8-3332] Sequential element (tx_data_reg[6]) is unused and will be removed from module matrix_io_ctrl.
 WARNING: [Synth 8-3332] Sequential element (u_rx/rx_shift_reg[9]) is unused and will be removed from module top.
 WARNING: [Synth 8-3332] Sequential element (u_rx/rx_shift_reg[8]) is unused and will be removed from module top.
 WARNING: [Synth 8-3332] Sequential element (u_tx/baud_cnt_reg[11]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (u_tx/tx_shift_reg[9]) is unused and will be removed from module top.
+WARNING: [Synth 8-3332] Sequential element (u_tx/tx_shift_reg[8]) is unused and will be removed from module top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:42 ; elapsed = 00:00:44 . Memory (MB): peak = 768.207 ; gain = 537.930
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start ROM, RAM, DSP and Shift Register Reporting
----------------------------------------------------------------------------------
-
-Distributed RAM: Preliminary Mapping  Report (see note below)
-+------------+--------------+-----------+----------------------+--------------+
-|Module Name | RTL Object   | Inference | Size (Depth x Width) | Primitives   | 
-+------------+--------------+-----------+----------------------+--------------+
-|u_ctrl      | stored_m_reg | Implied   | 4 x 3                | RAM32M x 5   | 
-|u_ctrl      | stored_n_reg | Implied   | 4 x 3                | RAM32M x 5   | 
-+------------+--------------+-----------+----------------------+--------------+
-
-Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
----------------------------------------------------------------------------------
-Finished ROM, RAM, DSP and Shift Register Reporting
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:08 ; elapsed = 00:01:26 . Memory (MB): peak = 761.980 ; gain = 531.602
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -481,28 +498,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:50 ; elapsed = 00:00:53 . Memory (MB): peak = 786.188 ; gain = 555.910
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:20 ; elapsed = 00:01:42 . Memory (MB): peak = 808.887 ; gain = 578.508
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:57 ; elapsed = 00:01:00 . Memory (MB): peak = 889.828 ; gain = 659.551
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start ROM, RAM, DSP and Shift Register Reporting
----------------------------------------------------------------------------------
-
-Distributed RAM: Final Mapping  Report
-+------------+--------------+-----------+----------------------+--------------+
-|Module Name | RTL Object   | Inference | Size (Depth x Width) | Primitives   | 
-+------------+--------------+-----------+----------------------+--------------+
-|u_ctrl      | stored_m_reg | Implied   | 4 x 3                | RAM32M x 5   | 
-|u_ctrl      | stored_n_reg | Implied   | 4 x 3                | RAM32M x 5   | 
-+------------+--------------+-----------+----------------------+--------------+
-
----------------------------------------------------------------------------------
-Finished ROM, RAM, DSP and Shift Register Reporting
+Finished Timing Optimization : Time (s): cpu = 00:01:54 ; elapsed = 00:02:22 . Memory (MB): peak = 1122.500 ; gain = 892.121
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -514,7 +516,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:00 ; elapsed = 00:01:03 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Technology Mapping : Time (s): cpu = 00:01:58 ; elapsed = 00:02:26 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -538,7 +540,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished IO Insertion : Time (s): cpu = 00:02:00 ; elapsed = 00:02:28 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -551,7 +553,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:00 ; elapsed = 00:02:28 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -563,25 +565,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:00 ; elapsed = 00:02:28 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:01 ; elapsed = 00:02:28 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:01 ; elapsed = 00:02:29 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:01 ; elapsed = 00:02:29 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -598,56 +600,54 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |    62|
-|3     |LUT1   |     2|
-|4     |LUT2   |   186|
-|5     |LUT3   |   181|
-|6     |LUT4   |   333|
-|7     |LUT5   |   168|
-|8     |LUT6   |  1617|
-|9     |MUXF7  |   246|
-|10    |MUXF8  |    97|
-|11    |RAM32M |    10|
-|12    |FDCE   |  1339|
-|13    |FDPE   |    10|
-|14    |FDRE   |   904|
-|15    |FDSE   |     1|
-|16    |IBUF   |    14|
-|17    |OBUF   |     9|
+|2     |CARRY4 |    74|
+|3     |LUT1   |    18|
+|4     |LUT2   |   179|
+|5     |LUT3   |   176|
+|6     |LUT4   |   436|
+|7     |LUT5   |   288|
+|8     |LUT6   |  1378|
+|9     |MUXF7  |   123|
+|10    |MUXF8  |    36|
+|11    |FDCE   |  1341|
+|12    |FDPE   |     9|
+|13    |FDRE   |   944|
+|14    |FDSE   |   202|
+|15    |IBUF   |    14|
+|16    |OBUF   |     9|
 +------+-------+------+
 
 Report Instance Areas: 
 +------+-------------+------------------+------+
 |      |Instance     |Module            |Cells |
 +------+-------------+------------------+------+
-|1     |top          |                  |  5180|
-|2     |  u_calc     |matrix_calculator |  2450|
-|3     |  u_ctrl     |matrix_io_ctrl    |  2440|
+|1     |top          |                  |  5228|
+|2     |  u_calc     |matrix_calculator |  2213|
+|3     |  u_ctrl     |matrix_io_ctrl    |  2712|
 |4     |  u_db_calc  |debounce          |    54|
 |5     |  u_db_print |debounce_0        |    54|
-|6     |  u_rx       |uart_rx           |    92|
-|7     |  u_tx       |uart_tx           |    60|
+|6     |  u_rx       |uart_rx           |   107|
+|7     |  u_tx       |uart_tx           |    58|
 +------+-------------+------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 894.160 ; gain = 663.883
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:01 ; elapsed = 00:02:29 . Memory (MB): peak = 1127.305 ; gain = 896.926
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 17 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:45 ; elapsed = 00:00:57 . Memory (MB): peak = 894.160 ; gain = 328.113
-Synthesis Optimization Complete : Time (s): cpu = 00:01:02 ; elapsed = 00:01:05 . Memory (MB): peak = 894.160 ; gain = 663.883
+Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:45 ; elapsed = 00:02:20 . Memory (MB): peak = 1127.305 ; gain = 561.109
+Synthesis Optimization Complete : Time (s): cpu = 00:02:01 ; elapsed = 00:02:29 . Memory (MB): peak = 1127.305 ; gain = 896.926
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 429 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 247 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 10 instances were transformed.
-  RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 10 instances
+No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-149 Infos, 22 Warnings, 0 Critical Warnings and 0 Errors encountered.
+176 Infos, 26 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:01:09 . Memory (MB): peak = 894.160 ; gain = 668.047
-INFO: [Common 17-1381] The checkpoint 'D:/Angle/Documents/vivado_projects/lab_project/lab_project.runs/synth_1/top.dcp' has been generated.
+synth_design: Time (s): cpu = 00:02:04 ; elapsed = 00:02:35 . Memory (MB): peak = 1127.305 ; gain = 901.336
+INFO: [Common 17-1381] The checkpoint 'D:/digital/lab_project/lab_project.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.055 . Memory (MB): peak = 894.160 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Tue Dec 16 11:19:15 2025...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 1127.305 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Fri Dec 19 16:40:40 2025...

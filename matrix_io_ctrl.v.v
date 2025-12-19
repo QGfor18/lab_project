@@ -51,16 +51,16 @@ module matrix_io_ctrl(
     reg [2:0] max_cnt; 
 
     // LED 显示逻辑
-    // led[3:0]: 显示有效矩阵存储状态
+    // led[3:0]: 显示4个矩阵槽位的存储状态（存储成功则对应LED亮）
     // led[4]: 计算模式指示
     // led[5]: 计算进行中
     // led[6]: 计算完成
-    // led[7]: 计算错误
-    assign led[3:0] = valid_mask & ((1 << max_cnt) - 1);
-    assign led[4] = (rx_state == S_CALC_MODE);
+    // led[7]: 计算错误/输出中
+    assign led[3:0] = valid_mask[3:0];  // 前4个LED显示矩阵存储状态
+    assign led[4] = (rx_state == S_CALC_MODE) || (rx_state == S_CALC_WAIT) || (rx_state == S_CALC_STORE);
     assign led[5] = calc_busy;
     assign led[6] = calc_done_flag;
-    assign led[7] = calc_error_flag;
+    assign led[7] = output_from_result;
 
     // ==========================================
     // 2. ������������״̬��
@@ -91,35 +91,54 @@ module matrix_io_ctrl(
     
     // 直接输出模式相关寄存器
     reg output_result_flag;       // 触发直接输出结果
+    reg output_done_flag;         // 输出完成标志
     reg [2:0] result_rows;        // 结果矩阵行数
     reg [2:0] result_cols;        // 结果矩阵列数
     reg [7:0] result_mem [0:24];  // 结果临时缓存（8位饱和后）
 
-    // --- ASCII 解析逻辑 ---
+    // --- ASCII 解析逻辑（支持多位数0-255）---
+    reg num_start;  // 标记是否开始接收新数字
     always @(posedge clk) begin
         if(!rst_n) begin
             num_buffer <= 0;
             num_valid <= 0;
+            num_start <= 1;  // 复位后准备接收第一个数字
         end else begin
             num_valid <= 0;
             if(rx_done) begin
                 if(rx_data >= "0" && rx_data <= "9") begin
-                    num_buffer <= rx_data - "0";
+                    if(num_start) begin
+                        // 新数字开始，从这个数字开始
+                        num_buffer <= rx_data - "0";
+                        num_start <= 0;
+                    end else begin
+                        // 继续累加多位数
+                        num_buffer <= num_buffer * 10 + (rx_data - "0");
+                    end
                 end
-                // 空格、空格、回车都作为数字分隔符
+                // 空格、回车都作为数字分隔符
                 else if(rx_data == " " || rx_data == 8'h0D || rx_data == 8'h0A) begin
-                    num_valid <= 1;
+                    if(!num_start) begin
+                        // 只有在接收过数字后才触发num_valid
+                        num_valid <= 1;
+                        num_start <= 1;  // 准备接收下一个数字
+                    end
                 end
             end
         end
     end
 
-    // --- 按钮去抖逻辑 ---
+    // --- 按钮去抖逻辑（边沿检测）---
     reg calc_trig_d1, calc_trig_d2;
-    wire calc_trig_pos = calc_trig_d1 & ~calc_trig_d2;
-    always @(posedge clk) begin
-        calc_trig_d1 <= calc_trigger;
-        calc_trig_d2 <= calc_trig_d1;
+    wire calc_trig_pos = calc_trig_d1 & ~calc_trig_d2;  // 上升沿检测
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            calc_trig_d1 <= 0;
+            calc_trig_d2 <= 0;
+        end else begin
+            calc_trig_d1 <= calc_trigger;
+            calc_trig_d2 <= calc_trig_d1;
+        end
     end
     
     // --- 矩阵控制逻辑 ---
@@ -145,9 +164,18 @@ module matrix_io_ctrl(
             operation_type <= 0;
             scalar_value <= 0;
             output_result_flag <= 0;
+            // output_done_flag 由输出状态机控制，这里不初始化
             result_rows <= 0;
             result_cols <= 0;
         end else begin
+            // 输出完成后返回主状态（只检测，不清除，由输出状态机清除）
+            if (output_done_flag) begin
+                rx_state <= S_RX_IDLE;
+            end
+            // 当输出状态机开始处理时，清除触发标志
+            if (output_result_flag && output_from_result) begin
+                output_result_flag <= 0;
+            end
             // 计算完成标志清除
             if (calc_done_flag) calc_done_flag <= 0;
             if (calc_error_flag) calc_error_flag <= 0;
@@ -157,29 +185,24 @@ module matrix_io_ctrl(
                 rx_state <= S_RX_CONFIG;
                 calc_step <= 0;
             end
-            // 强制进入计算模式逻辑 (通过按钮编码进入)
-            else if (btn_op != 0 && rx_state != S_CALC_MODE && rx_state != S_RX_CONFIG) begin
+            // 进入计算模式逻辑 (通过按钮编码进入，按一下即锁定)
+            else if (btn_op != 0 && rx_state != S_CALC_MODE && rx_state != S_CALC_WAIT && rx_state != S_RX_CONFIG) begin
                 rx_state <= S_CALC_MODE;
                 calc_step <= 0;
                 // 按钮编码映射到运算类型
                 case(btn_op)
-                    4'b0001: operation_type <= 4'd0;  // V3(R3) → 转置
+                    4'b0001: operation_type <= 4'd0;  // R3 → 转置
                     4'b0010: operation_type <= 4'd1;  // V4 → 加法
                     4'b0100: operation_type <= 4'd2;  // V5 → 标量乘
-                    4'b1000: operation_type <= 4'd3;  // V6(V2) → 矩阵乘
+                    4'b1000: operation_type <= 4'd3;  // V2 → 矩阵乘
                     default: operation_type <= 4'd0;
                 endcase
             end
-            // 退出特殊模式
+            // 退出配置模式
             else if (!config_en && rx_state == S_RX_CONFIG) begin
                 rx_state <= S_RX_IDLE;
             end
-            else if (btn_op == 0 && (rx_state == S_CALC_MODE || rx_state == S_CALC_WAIT || rx_state == S_CALC_STORE)) begin
-                // 只有在非计算进行中时才退出
-                if (!calc_busy) begin
-                    rx_state <= S_RX_IDLE;
-                end
-            end
+            // 注意：计算模式不再自动退出，只有输出完成后才退出
             else begin
                 case(rx_state)
                     S_RX_IDLE: begin
@@ -294,27 +317,18 @@ module matrix_io_ctrl(
                                 // 保存结果维度
                                 result_rows <= result_dim[5:3];
                                 result_cols <= result_dim[2:0];
-                                // 触发直接输出
-                                output_result_flag <= 1;
+                                // 先进入STORE状态等待数据稳定，再触发输出
                                 calc_done_flag <= 1;
-                                rx_state <= S_CALC_MODE;
+                                rx_state <= S_CALC_STORE;
                             end
                         end
                     end
                     
-                    // [存储计算结果到矩阵槽位 - 可选功能]
+                    // [存储完成后触发输出]
                     S_CALC_STORE: begin
-                        // 存储结果矩阵数据、维度和有效位
-                        if (!calc_error) begin
-                            // 存储计算结果到矩阵存储器
-                            for (j = 0; j < 25; j = j + 1) begin
-                                matrix_mem[result_idx][j] <= result_mem[j];
-                            end
-                            // 存储结果矩阵维度
-                            stored_m[result_idx] <= result_rows;
-                            stored_n[result_idx] <= result_cols;
-                            valid_mask[result_idx] <= 1'b1;
-                        end
+                        // 此时 result_mem, result_rows, result_cols 已经稳定
+                        // 触发直接输出
+                        output_result_flag <= 1;
                         rx_state <= S_CALC_MODE;
                     end
                 endcase
@@ -370,9 +384,14 @@ module matrix_io_ctrl(
             rd_ptr <= 0; rd_idx <= 0;
             r_cnt <= 0; c_cnt <= 0;
             output_from_result <= 0;
+            output_done_flag <= 0;
             out_rows <= 0; out_cols <= 0;
         end else begin
-            tx_start <= 0; 
+            tx_start <= 0;
+            // 每次进入T_IDLE时清除output_done_flag，避免主状态机多次响应
+            if (tx_state == T_IDLE) begin
+                output_done_flag <= 0;
+            end
             case(tx_state)
                 T_IDLE: begin
                     // 优先：计算结果直接输出
@@ -479,7 +498,10 @@ module matrix_io_ctrl(
                 T_WAIT_LF: begin
                     if(!tx_busy) begin
                         if(r_cnt == out_rows - 1) begin
-                            // 打印完成，清除标志
+                            // 打印完成
+                            if (output_from_result) begin
+                                output_done_flag <= 1;  // 通知主状态机
+                            end
                             output_from_result <= 0;
                             tx_state <= T_IDLE;
                         end else begin
@@ -491,11 +513,6 @@ module matrix_io_ctrl(
                     end
                 end
             endcase
-            
-            // 清除输出触发标志（在开始输出后）
-            if (output_result_flag && tx_state != T_IDLE) begin
-                output_result_flag <= 0;
-            end
         end
     end
     

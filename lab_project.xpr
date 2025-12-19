@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="35" Path="D:/Angle/Documents/vivado_projects/lab_project/lab_project.xpr">
+<Project Version="7" Minor="35" Path="D:/digital/lab_project/lab_project.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="eb4950d82a7843368d5645a2fb76308d"/>
