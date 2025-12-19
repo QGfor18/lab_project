@@ -1,0 +1,11 @@
+0.6
+2017.4
+Dec 15 2017
+21:07:18
+D:/Angle/Documents/vivado_projects/lab_project/lab_project.sim/sim_1/behav/xsim/glbl.v,1513215259,verilog,,,,glbl,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v,1765854338,verilog,,D:/Angle/Documents/vivado_projects/lab_project/project_operation.v,,matrix_io_ctrl,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/project_operation.v,1765639285,verilog,,D:/Angle/Documents/vivado_projects/lab_project/top.v,,matrix_calculator,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/top.v,1765845597,verilog,,D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v,,debounce;top,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/top_tb.v,1765874560,verilog,,,,top_tb,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v,1765631682,verilog,,D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v,,uart_rx,,,,,,,,
+D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v,1765631682,verilog,,D:/Angle/Documents/vivado_projects/lab_project/top_tb.v,,uart_tx,,,,,,,,

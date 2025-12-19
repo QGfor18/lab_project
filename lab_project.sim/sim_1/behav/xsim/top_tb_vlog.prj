@@ -1,0 +1,14 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../matrix_io_ctrl.v.v" \
+"../../../../project_operation.v" \
+"../../../../top.v" \
+"../../../../uart_rx.v" \
+"../../../../uart_tx.v" \
+"../../../../top_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

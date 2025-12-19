@@ -1,0 +1,21 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module matrix_io_ctrl
+WARNING: [VRFC 10-756] identifier rx_state is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:60]
+WARNING: [VRFC 10-756] identifier calc_busy is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:61]
+WARNING: [VRFC 10-756] identifier calc_done_flag is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:62]
+WARNING: [VRFC 10-756] identifier calc_error_flag is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:63]
+WARNING: [VRFC 10-756] identifier i is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:284]
+WARNING: [VRFC 10-756] identifier i is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:286]
+WARNING: [VRFC 10-756] identifier i is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:287]
+WARNING: [VRFC 10-756] identifier i is used before its declaration [D:/Angle/Documents/vivado_projects/lab_project/matrix_io_ctrl.v.v:289]
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/project_operation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module matrix_calculator
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-311] analyzing module debounce
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/uart_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module uart_rx
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/uart_tx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module uart_tx
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Angle/Documents/vivado_projects/lab_project/top_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top_tb

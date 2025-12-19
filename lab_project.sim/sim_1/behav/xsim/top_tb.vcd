@@ -1,0 +1,2116 @@
+$date
+   Tue Dec 16 16:43:02 2025
+$end
+$version
+  2017.4
+$end
+$timescale
+  1ps
+$end
+$scope module top_tb $end
+$var reg 1 ! clk $end
+$var reg 1 " uart_rx $end
+$var reg 8 # key [7:0] $end
+$var reg 1 $ uart_rx_rst_n $end
+$var reg 1 % btn_print_v1 $end
+$var reg 1 & config_en $end
+$var reg 1 ' btn_calc_u3 $end
+$var reg 1 ( btn_op0 $end
+$var reg 1 ) btn_op1 $end
+$var reg 1 * btn_op2 $end
+$var reg 1 + btn_op3 $end
+$var wire 1 , uart_tx $end
+$var wire 8 - led [7:0] $end
+$var integer 32 . test_pass $end
+$var integer 32 / tx_monitor_en $end
+$var reg 8 0 tx_data_captured [7:0] $end
+$var integer 32 1 tx_bit_count $end
+$var parameter 32 2 CLK_FREQ [31:0] $end
+$var parameter 32 3 BAUD_RATE [31:0] $end
+$var parameter 32 4 BIT_PERIOD [31:0] $end
+$var parameter 32 5 HALF_BIT [31:0] $end
+$scope module uut $end
+$var wire 1 6 clk $end
+$var wire 1 7 uart_rx $end
+$var wire 1 , uart_tx $end
+$var wire 8 8 key [7:0] $end
+$var wire 8 - led [7:0] $end
+$var wire 1 9 uart_rx_rst_n $end
+$var wire 1 : btn_print_v1 $end
+$var wire 1 ; config_en $end
+$var wire 1 < btn_calc_u3 $end
+$var wire 1 = btn_op0 $end
+$var wire 1 > btn_op1 $end
+$var wire 1 ? btn_op2 $end
+$var wire 1 @ btn_op3 $end
+$var wire 8 A rx_data [7:0] $end
+$var wire 1 B rx_done $end
+$var wire 8 C tx_data [7:0] $end
+$var wire 1 D tx_start $end
+$var wire 1 E tx_busy $end
+$var wire 1 F btn_print_stable $end
+$var wire 1 G btn_calc_stable $end
+$var wire 1 H calc_start $end
+$var wire 4 I operation_type [3:0] $end
+$var wire 6 J matrix_a_dim [5:0] $end
+$var wire 6 K matrix_b_dim [5:0] $end
+$var wire 8 L scalar_value [7:0] $end
+$var wire 200 M matrix_a_data [199:0] $end
+$var wire 200 N matrix_b_data [199:0] $end
+$var wire 400 O result_data [399:0] $end
+$var wire 6 P result_dim [5:0] $end
+$var wire 1 Q calc_done $end
+$var wire 1 R calc_error $end
+$var wire 4 S btn_op [3:0] $end
+$scope module u_db_print $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 1 : btn_in $end
+$var reg 1 T btn_out $end
+$var reg 21 U cnt [20:0] $end
+$var reg 1 V btn_d1 $end
+$var reg 1 W btn_d2 $end
+$var parameter 32 X CNT_MAX [31:0] $end
+$upscope $end
+$scope module u_db_calc $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 1 < btn_in $end
+$var reg 1 Y btn_out $end
+$var reg 21 Z cnt [20:0] $end
+$var reg 1 [ btn_d1 $end
+$var reg 1 \ btn_d2 $end
+$var parameter 32 ] CNT_MAX [31:0] $end
+$upscope $end
+$scope module u_rx $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 1 7 rx $end
+$var reg 8 ^ rx_data [7:0] $end
+$var reg 1 _ rx_done $end
+$var reg 16 ` baud_cnt [15:0] $end
+$var reg 4 a bit_idx [3:0] $end
+$var reg 10 b rx_shift [9:0] $end
+$var reg 1 c rx_busy $end
+$var reg 1 d rx_d1 $end
+$var reg 1 e rx_d2 $end
+$var parameter 32 f CLK_FREQ [31:0] $end
+$var parameter 32 g BAUD_RATE [31:0] $end
+$var parameter 32 h BAUD_DIV [31:0] $end
+$upscope $end
+$scope module u_tx $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 1 D tx_start $end
+$var wire 8 C tx_data [7:0] $end
+$var reg 1 i tx $end
+$var reg 1 j tx_busy $end
+$var reg 16 k baud_cnt [15:0] $end
+$var reg 4 l bit_idx [3:0] $end
+$var reg 10 m tx_shift [9:0] $end
+$var parameter 32 n CLK_FREQ [31:0] $end
+$var parameter 32 o BAUD_RATE [31:0] $end
+$var parameter 32 p BAUD_DIV [31:0] $end
+$upscope $end
+$scope module u_calc $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 1 H start $end
+$var wire 4 I operation_type [3:0] $end
+$var wire 6 J matrix_a_dim [5:0] $end
+$var wire 6 K matrix_b_dim [5:0] $end
+$var wire 8 L scalar_value [7:0] $end
+$var wire 200 M matrix_a_data [199:0] $end
+$var wire 200 N matrix_b_data [199:0] $end
+$var reg 400 q result_data [399:0] $end
+$var reg 6 r result_dim [5:0] $end
+$var reg 1 s done $end
+$var reg 1 t error $end
+$var reg 3 u current_state [2:0] $end
+$var reg 5 v row_cnt [4:0] $end
+$var reg 5 w col_cnt [4:0] $end
+$var reg 5 x k_cnt [4:0] $end
+$var reg 5 y idx [4:0] $end
+$var reg 16 z mul_acc [15:0] $end
+$var wire 3 { a_rows [2:0] $end
+$var wire 3 | a_cols [2:0] $end
+$var wire 3 } b_rows [2:0] $end
+$var wire 3 ~ b_cols [2:0] $end
+$var wire 5 !! a_size [4:0] $end
+$var wire 5 "! b_size [4:0] $end
+$var integer 32 #! i $end
+$var parameter 3 $! IDLE [2:0] $end
+$var parameter 3 %! LOAD_DATA [2:0] $end
+$var parameter 3 &! CALCULATE [2:0] $end
+$var parameter 3 '! OUTPUT_RES [2:0] $end
+$upscope $end
+$scope module u_ctrl $end
+$var wire 1 6 clk $end
+$var wire 1 9 rst_n $end
+$var wire 8 A rx_data [7:0] $end
+$var wire 1 B rx_done $end
+$var reg 8 (! tx_data [7:0] $end
+$var reg 1 )! tx_start $end
+$var wire 1 E tx_busy $end
+$var wire 1 F print_trigger $end
+$var wire 4 *! sw_select [3:0] $end
+$var wire 1 ; config_en $end
+$var wire 1 G calc_trigger $end
+$var wire 4 S btn_op [3:0] $end
+$var wire 8 - led [7:0] $end
+$var reg 1 +! calc_start $end
+$var reg 4 ,! operation_type [3:0] $end
+$var reg 6 -! matrix_a_dim [5:0] $end
+$var reg 6 .! matrix_b_dim [5:0] $end
+$var reg 8 /! scalar_value [7:0] $end
+$var reg 200 0! matrix_a_data [199:0] $end
+$var reg 200 1! matrix_b_data [199:0] $end
+$var wire 400 O result_data [399:0] $end
+$var wire 6 P result_dim [5:0] $end
+$var wire 1 Q calc_done $end
+$var wire 1 R calc_error $end
+$var reg 3 2! wr_ptr [2:0] $end
+$var reg 4 3! valid_mask [3:0] $end
+$var reg 5 4! data_cnt [4:0] $end
+$var reg 3 5! max_cnt [2:0] $end
+$var reg 3 6! rx_state [2:0] $end
+$var reg 8 7! num_buffer [7:0] $end
+$var reg 1 8! num_valid $end
+$var reg 2 9! calc_step [1:0] $end
+$var reg 2 :! matrix_a_idx [1:0] $end
+$var reg 2 ;! matrix_b_idx [1:0] $end
+$var reg 2 <! result_idx [1:0] $end
+$var reg 8 =! scalar_buffer [7:0] $end
+$var reg 1 >! calc_trigger_stable $end
+$var reg 1 ?! calc_busy $end
+$var reg 1 @! calc_done_flag $end
+$var reg 1 A! calc_error_flag $end
+$var reg 1 B! calc_trig_d1 $end
+$var reg 1 C! calc_trig_d2 $end
+$var wire 1 D! calc_trig_pos $end
+$var reg 4 E! tx_state [3:0] $end
+$var reg 2 F! rd_ptr [1:0] $end
+$var reg 5 G! rd_idx [4:0] $end
+$var reg 3 H! r_cnt [2:0] $end
+$var reg 3 I! c_cnt [2:0] $end
+$var reg 1 J! trig_d1 $end
+$var reg 1 K! trig_d2 $end
+$var wire 1 L! trig_pos $end
+$var integer 32 M! i $end
+$var parameter 32 N! MAX_PHYSICAL_CAP [31:0] $end
+$var parameter 32 O! S_RX_IDLE [31:0] $end
+$var parameter 32 P! S_RX_GET_M [31:0] $end
+$var parameter 32 Q! S_RX_GET_N [31:0] $end
+$var parameter 32 R! S_RX_DATA [31:0] $end
+$var parameter 32 S! S_RX_CONFIG [31:0] $end
+$var parameter 32 T! S_CALC_MODE [31:0] $end
+$var parameter 32 U! S_CALC_WAIT [31:0] $end
+$var parameter 32 V! S_CALC_STORE [31:0] $end
+$var parameter 32 W! T_IDLE [31:0] $end
+$var parameter 32 X! T_PRINT_NUM [31:0] $end
+$var parameter 32 Y! T_WAIT_NUM [31:0] $end
+$var parameter 32 Z! T_PRINT_SP [31:0] $end
+$var parameter 32 [! T_WAIT_SP [31:0] $end
+$var parameter 32 \! T_PRINT_CR [31:0] $end
+$var parameter 32 ]! T_WAIT_CR [31:0] $end
+$var parameter 32 ^! T_PRINT_LF [31:0] $end
+$var parameter 32 _! T_WAIT_LF [31:0] $end
+$upscope $end
+$upscope $end
+$scope task send_uart_byte $end
+$var reg 8 `! data [7:0] $end
+$var integer 32 a! i $end
+$upscope $end
+$scope task send_matrix_via_uart $end
+$var reg 3 b! m [2:0] $end
+$var reg 3 c! n [2:0] $end
+$var reg 200 d! data [199:0] $end
+$var integer 32 e! i $end
+$var integer 32 f! total $end
+$upscope $end
+$scope task send_calc_params_via_uart $end
+$var reg 2 g! a_idx [1:0] $end
+$var reg 2 h! b_idx [1:0] $end
+$var reg 8 i! scalar [7:0] $end
+$var reg 2 j! res_idx [1:0] $end
+$upscope $end
+$scope task wait_for_calc_done $end
+$var integer 32 k! timeout $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0!
+bx !!
+1"
+bx "!
+b0 #
+bx #!
+0$
+b0 $!
+0%
+b1 %!
+0&
+b10 &!
+0'
+b11 '!
+0(
+bx (!
+0)
+x)!
+0*
+b0 *!
+0+
+x+!
+1,
+bx ,!
+bx -
+bx -!
+b1 .
+bx .!
+b0 /
+bx /!
+bx 0
+bx 0!
+bx 1
+bx 1!
+b101111101011110000100000000 2
+bx 2!
+b11100001000000000 3
+bx 3!
+b10000111101000 4
+bx 4!
+b1000011110100 5
+bx 5!
+06
+bx 6!
+17
+bx 7!
+b0 8
+x8!
+09
+bx 9!
+0:
+bx :!
+0;
+bx ;!
+0<
+bx <!
+0=
+bx =!
+0>
+x>!
+0?
+x?!
+0@
+x@!
+b0 A
+xA!
+0B
+xB!
+bx C
+xC!
+xD
+xD!
+0E
+bx E!
+0F
+bx F!
+0G
+bx G!
+xH
+bx H!
+bx I
+bx I!
+bx J
+xJ!
+bx K
+xK!
+bx L
+xL!
+bx M
+bx M!
+bx N
+b100 N!
+b0 O
+b0 O!
+b0 P
+b1 P!
+0Q
+b10 Q!
+0R
+b11 R!
+b0 S
+b100 S!
+0T
+b101 T!
+b0 U
+b110 U!
+0V
+b111 V!
+0W
+b0 W!
+b111101000010010000000 X
+b1 X!
+0Y
+b10 Y!
+b0 Z
+b11 Z!
+0[
+b100 [!
+0\
+b101 \!
+b111101000010010000000 ]
+b110 ]!
+b0 ^
+b111 ^!
+0_
+b1000 _!
+b0 `
+bx `!
+b0 a
+bx a!
+bx b
+bx b!
+0c
+bx c!
+xd
+bx d!
+xe
+bx e!
+b101111101011110000100000000 f
+bx f!
+b11100001000000000 g
+bx g!
+b1101100100 h
+bx h!
+1i
+bx i!
+0j
+bx j!
+b0 k
+bx k!
+b0 l
+b1111111111 m
+b101111101011110000100000000 n
+b11100001000000000 o
+b1101100100 p
+b0 q
+b0 r
+0s
+0t
+b0 u
+b0 v
+b0 w
+b0 x
+b0 y
+b0 z
+bx {
+bx |
+bx }
+bx ~
+$end
+#5000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 -
+bx -!
+bx .!
+b0 /!
+bx 0!
+bx 1!
+b0 2!
+b0 3!
+b0 4!
+b10 5!
+16
+b0 6!
+b0 7!
+08!
+b0 9!
+b0 :!
+b0 ;!
+b0 <!
+b0 =!
+0?!
+0@!
+0A!
+0B!
+b0 C
+xC!
+0D
+0D!
+b0 E!
+0H
+b0 I
+0J!
+xK!
+b0 L
+0L!
+b11001 M!
+0T
+0Y
+b0 ^
+0_
+1d
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#10000
+0!
+06
+#15000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1e
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#20000
+0!
+06
+#25000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#30000
+0!
+06
+#35000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#40000
+0!
+06
+#45000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#50000
+0!
+06
+#55000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#60000
+0!
+06
+#65000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#70000
+0!
+06
+#75000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#80000
+0!
+06
+#85000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#90000
+0!
+06
+#95000
+1!
+b0 (!
+0)!
+0+!
+b0 ,!
+b0 /!
+b0 3!
+b10 5!
+16
+b0 6!
+b0 :!
+b0 ;!
+0?!
+0@!
+0A!
+0B!
+0C!
+0J!
+0K!
+0T
+0Y
+b0 ^
+0_
+1i
+0j
+b0 q
+b0 r
+0s
+0t
+#100000
+0!
+1$
+06
+19
+#105000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#110000
+0!
+06
+#115000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#120000
+0!
+06
+#125000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#130000
+0!
+06
+#135000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#140000
+0!
+06
+#145000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#150000
+0!
+06
+#155000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#160000
+0!
+06
+#165000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#170000
+0!
+06
+#175000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#180000
+0!
+06
+#185000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#190000
+0!
+06
+#195000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0s
+0t
+#200000
+0!
+0"
+06
+07
+b110010 `!
+b10 b!
+b10 c!
+b1000000100000001100000100 d!
+b100 f!
+#205000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0d
+0s
+0t
+#210000
+0!
+06
+#215000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+0e
+0s
+0t
+#220000
+0!
+06
+#225000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110010 `
+1c
+0s
+0t
+#230000
+0!
+06
+#235000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110011 `
+0s
+0t
+#240000
+0!
+06
+#245000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110100 `
+0s
+0t
+#250000
+0!
+06
+#255000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110101 `
+0s
+0t
+#260000
+0!
+06
+#265000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110110 `
+0s
+0t
+#270000
+0!
+06
+#275000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110110111 `
+0s
+0t
+#280000
+0!
+06
+#285000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111000 `
+0s
+0t
+#290000
+0!
+06
+#295000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111001 `
+0s
+0t
+#300000
+0!
+06
+#305000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111010 `
+0s
+0t
+#310000
+0!
+06
+#315000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111011 `
+0s
+0t
+#320000
+0!
+06
+#325000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111100 `
+0s
+0t
+#330000
+0!
+06
+#335000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111101 `
+0s
+0t
+#340000
+0!
+06
+#345000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111110 `
+0s
+0t
+#350000
+0!
+06
+#355000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b110111111 `
+0s
+0t
+#360000
+0!
+06
+#365000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000000 `
+0s
+0t
+#370000
+0!
+06
+#375000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000001 `
+0s
+0t
+#380000
+0!
+06
+#385000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000010 `
+0s
+0t
+#390000
+0!
+06
+#395000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000011 `
+0s
+0t
+#400000
+0!
+06
+#405000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000100 `
+0s
+0t
+#410000
+0!
+06
+#415000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000101 `
+0s
+0t
+#420000
+0!
+06
+#425000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000110 `
+0s
+0t
+#430000
+0!
+06
+#435000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111000111 `
+0s
+0t
+#440000
+0!
+06
+#445000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001000 `
+0s
+0t
+#450000
+0!
+06
+#455000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001001 `
+0s
+0t
+#460000
+0!
+06
+#465000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001010 `
+0s
+0t
+#470000
+0!
+06
+#475000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001011 `
+0s
+0t
+#480000
+0!
+06
+#485000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001100 `
+0s
+0t
+#490000
+0!
+06
+#495000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001101 `
+0s
+0t
+#500000
+0!
+06
+#505000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001110 `
+0s
+0t
+#510000
+0!
+06
+#515000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111001111 `
+0s
+0t
+#520000
+0!
+06
+#525000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010000 `
+0s
+0t
+#530000
+0!
+06
+#535000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010001 `
+0s
+0t
+#540000
+0!
+06
+#545000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010010 `
+0s
+0t
+#550000
+0!
+06
+#555000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010011 `
+0s
+0t
+#560000
+0!
+06
+#565000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010100 `
+0s
+0t
+#570000
+0!
+06
+#575000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010101 `
+0s
+0t
+#580000
+0!
+06
+#585000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010110 `
+0s
+0t
+#590000
+0!
+06
+#595000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111010111 `
+0s
+0t
+#600000
+0!
+06
+#605000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011000 `
+0s
+0t
+#610000
+0!
+06
+#615000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011001 `
+0s
+0t
+#620000
+0!
+06
+#625000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011010 `
+0s
+0t
+#630000
+0!
+06
+#635000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011011 `
+0s
+0t
+#640000
+0!
+06
+#645000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011100 `
+0s
+0t
+#650000
+0!
+06
+#655000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011101 `
+0s
+0t
+#660000
+0!
+06
+#665000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011110 `
+0s
+0t
+#670000
+0!
+06
+#675000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111011111 `
+0s
+0t
+#680000
+0!
+06
+#685000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100000 `
+0s
+0t
+#690000
+0!
+06
+#695000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100001 `
+0s
+0t
+#700000
+0!
+06
+#705000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100010 `
+0s
+0t
+#710000
+0!
+06
+#715000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100011 `
+0s
+0t
+#720000
+0!
+06
+#725000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100100 `
+0s
+0t
+#730000
+0!
+06
+#735000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100101 `
+0s
+0t
+#740000
+0!
+06
+#745000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100110 `
+0s
+0t
+#750000
+0!
+06
+#755000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111100111 `
+0s
+0t
+#760000
+0!
+06
+#765000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101000 `
+0s
+0t
+#770000
+0!
+06
+#775000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101001 `
+0s
+0t
+#780000
+0!
+06
+#785000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101010 `
+0s
+0t
+#790000
+0!
+06
+#795000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101011 `
+0s
+0t
+#800000
+0!
+06
+#805000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101100 `
+0s
+0t
+#810000
+0!
+06
+#815000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101101 `
+0s
+0t
+#820000
+0!
+06
+#825000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101110 `
+0s
+0t
+#830000
+0!
+06
+#835000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111101111 `
+0s
+0t
+#840000
+0!
+06
+#845000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110000 `
+0s
+0t
+#850000
+0!
+06
+#855000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110001 `
+0s
+0t
+#860000
+0!
+06
+#865000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110010 `
+0s
+0t
+#870000
+0!
+06
+#875000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110011 `
+0s
+0t
+#880000
+0!
+06
+#885000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110100 `
+0s
+0t
+#890000
+0!
+06
+#895000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110101 `
+0s
+0t
+#900000
+0!
+06
+#905000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110110 `
+0s
+0t
+#910000
+0!
+06
+#915000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111110111 `
+0s
+0t
+#920000
+0!
+06
+#925000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111000 `
+0s
+0t
+#930000
+0!
+06
+#935000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111001 `
+0s
+0t
+#940000
+0!
+06
+#945000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111010 `
+0s
+0t
+#950000
+0!
+06
+#955000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111011 `
+0s
+0t
+#960000
+0!
+06
+#965000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111100 `
+0s
+0t
+#970000
+0!
+06
+#975000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111101 `
+0s
+0t
+#980000
+0!
+06
+#985000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111110 `
+0s
+0t
+#990000
+0!
+06
+#995000
+1!
+0)!
+16
+0B!
+0C!
+0J!
+0K!
+0_
+b111111111 `
+0s
+0t
+#1000000
+0!
+06
