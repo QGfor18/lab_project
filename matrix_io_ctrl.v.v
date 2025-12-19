@@ -72,7 +72,7 @@ module matrix_io_ctrl(
     localparam S_RX_CONFIG  = 4; // 配置模式状态
     localparam S_CALC_MODE  = 5; // 计算模式状态
     localparam S_CALC_WAIT  = 6; // 等待计算完成
-    localparam S_CALC_STORE = 7; // 存储计算结果
+    localparam S_CALC_STORE = 7; // 存储计算结果（可选）
     
     reg [2:0] rx_state;
     reg [7:0] num_buffer;
@@ -88,6 +88,12 @@ module matrix_io_ctrl(
     reg calc_busy;                // 计算进行中标志
     reg calc_done_flag;           // 计算完成标志
     reg calc_error_flag;          // 计算错误标志
+    
+    // 直接输出模式相关寄存器
+    reg output_result_flag;       // 触发直接输出结果
+    reg [2:0] result_rows;        // 结果矩阵行数
+    reg [2:0] result_cols;        // 结果矩阵列数
+    reg [7:0] result_mem [0:24];  // 结果临时缓存（8位饱和后）
 
     // --- ASCII 解析逻辑 ---
     always @(posedge clk) begin
@@ -117,6 +123,7 @@ module matrix_io_ctrl(
     end
     
     // --- 矩阵控制逻辑 ---
+    integer j; // 用于时序块中的for循环
     always @(posedge clk) begin
         if(!rst_n) begin
             rx_state <= S_RX_IDLE;
@@ -137,6 +144,9 @@ module matrix_io_ctrl(
             calc_start <= 0;
             operation_type <= 0;
             scalar_value <= 0;
+            output_result_flag <= 0;
+            result_rows <= 0;
+            result_cols <= 0;
         end else begin
             // 计算完成标志清除
             if (calc_done_flag) calc_done_flag <= 0;
@@ -164,8 +174,11 @@ module matrix_io_ctrl(
             else if (!config_en && rx_state == S_RX_CONFIG) begin
                 rx_state <= S_RX_IDLE;
             end
-            else if (btn_op == 0 && rx_state == S_CALC_MODE) begin
-                rx_state <= S_RX_IDLE;
+            else if (btn_op == 0 && (rx_state == S_CALC_MODE || rx_state == S_CALC_WAIT || rx_state == S_CALC_STORE)) begin
+                // 只有在非计算进行中时才退出
+                if (!calc_busy) begin
+                    rx_state <= S_RX_IDLE;
+                end
             end
             else begin
                 case(rx_state)
@@ -249,14 +262,12 @@ module matrix_io_ctrl(
                         
                         // 计算触发
                         if (calc_trig_pos && !calc_busy) begin
-                            // 检查矩阵有效性
+                            // 修正：加法(1)和矩阵乘(3)需要两个矩阵，转置(0)和标量乘(2)只需要矩阵A
                             if (valid_mask[matrix_a_idx] &&
-                                (operation_type != 1 && operation_type != 3 || valid_mask[matrix_b_idx])) begin
+                                (operation_type == 4'd0 || operation_type == 4'd2 || valid_mask[matrix_b_idx])) begin
                                 calc_busy <= 1;
                                 calc_start <= 1;
-                                // 设置计算参数
                                 scalar_value <= scalar_buffer;
-                                // 切换到等待状态
                                 rx_state <= S_CALC_WAIT;
                             end
                         end
@@ -264,36 +275,46 @@ module matrix_io_ctrl(
                     
                     // [等待计算完成]
                     S_CALC_WAIT: begin
-                        calc_start <= 0;
-                        if (calc_done) begin
+                        // 延迟一拍再清除calc_start，确保计算模块能采样到
+                        if (calc_start) begin
+                            calc_start <= 0;
+                        end else if (calc_done) begin
                             calc_busy <= 0;
                             if (calc_error) begin
                                 calc_error_flag <= 1;
                                 rx_state <= S_CALC_MODE;
                             end else begin
-                                rx_state <= S_CALC_STORE;
+                                // 将结果存入临时缓存（饱和处理）
+                                for (j = 0; j < 25; j = j + 1) begin
+                                    if (result_data[j*16 +: 16] > 255)
+                                        result_mem[j] <= 8'd255;
+                                    else
+                                        result_mem[j] <= result_data[j*16 +: 8];
+                                end
+                                // 保存结果维度
+                                result_rows <= result_dim[5:3];
+                                result_cols <= result_dim[2:0];
+                                // 触发直接输出
+                                output_result_flag <= 1;
+                                calc_done_flag <= 1;
+                                rx_state <= S_CALC_MODE;
                             end
                         end
                     end
                     
-                    // [存储计算结果]
+                    // [存储计算结果到矩阵槽位 - 可选功能]
                     S_CALC_STORE: begin
                         // 存储结果矩阵数据、维度和有效位
                         if (!calc_error) begin
                             // 存储计算结果到矩阵存储器
-                            for (i = 0; i < 25; i = i + 1) begin
-                                // 取低8位（饱和处理：如果大于255则截断为255）
-                                if (result_data[i*16 +: 16] > 255)
-                                    matrix_mem[result_idx][i] <= 8'd255;
-                                else
-                                    matrix_mem[result_idx][i] <= result_data[i*16 +: 8];
+                            for (j = 0; j < 25; j = j + 1) begin
+                                matrix_mem[result_idx][j] <= result_mem[j];
                             end
                             // 存储结果矩阵维度
-                            stored_m[result_idx] <= result_dim[5:3];
-                            stored_n[result_idx] <= result_dim[2:0];
+                            stored_m[result_idx] <= result_rows;
+                            stored_n[result_idx] <= result_cols;
                             valid_mask[result_idx] <= 1'b1;
                         end
-                        calc_done_flag <= 1;
                         rx_state <= S_CALC_MODE;
                     end
                 endcase
@@ -302,24 +323,39 @@ module matrix_io_ctrl(
     end
 
     // ==========================================
-    // 3. �����ʽ��״̬��
+    // 3. 输出格式化状态机（支持多位数0-255）
     // ==========================================
     localparam T_IDLE       = 0;
-    localparam T_PRINT_NUM  = 1;
-    localparam T_WAIT_NUM   = 2;
-    localparam T_PRINT_SP   = 3;
-    localparam T_WAIT_SP    = 4;
-    localparam T_PRINT_CR   = 5;
-    localparam T_WAIT_CR    = 6;
-    localparam T_PRINT_LF   = 7;
-    localparam T_WAIT_LF    = 8;
+    localparam T_LOAD_NUM   = 1;  // 加载数值并分解
+    localparam T_PRINT_H    = 2;  // 打印百位
+    localparam T_WAIT_H     = 3;
+    localparam T_PRINT_T    = 4;  // 打印十位
+    localparam T_WAIT_T     = 5;
+    localparam T_PRINT_U    = 6;  // 打印个位
+    localparam T_WAIT_U     = 7;
+    localparam T_PRINT_SP   = 8;  // 打印空格
+    localparam T_WAIT_SP    = 9;
+    localparam T_PRINT_CR   = 10;
+    localparam T_WAIT_CR    = 11;
+    localparam T_PRINT_LF   = 12;
+    localparam T_WAIT_LF    = 13;
 
     reg [3:0] tx_state;
     reg [1:0] rd_ptr;      
     reg [4:0] rd_idx;
     reg [2:0] r_cnt, c_cnt;
+    
+    // 多位数打印寄存器
+    reg [7:0] print_val;
+    reg [3:0] digit_h, digit_t, digit_u;
+    reg skip_h, skip_t;
+    
+    // 输出模式：0=从matrix_mem读取，1=从result_mem读取
+    reg output_from_result;
+    // 直接输出时使用的行列数
+    reg [2:0] out_rows, out_cols;
 
-    // ���ؼ���ӡ�����ź�
+    // 按键边沿检测
     reg trig_d1, trig_d2;
     wire trig_pos = trig_d1 & ~trig_d2;
     always @(posedge clk) begin trig_d1 <= print_trigger; trig_d2 <= trig_d1; end
@@ -328,44 +364,110 @@ module matrix_io_ctrl(
         if(!rst_n) begin
             tx_state <= T_IDLE;
             tx_start <= 0; tx_data <= 0;
+            print_val <= 0;
+            digit_h <= 0; digit_t <= 0; digit_u <= 0;
+            skip_h <= 0; skip_t <= 0;
+            rd_ptr <= 0; rd_idx <= 0;
+            r_cnt <= 0; c_cnt <= 0;
+            output_from_result <= 0;
+            out_rows <= 0; out_cols <= 0;
         end else begin
             tx_start <= 0; 
             case(tx_state)
                 T_IDLE: begin
-                    if(trig_pos) begin
-                        // ��鿪��ѡ�� & ������Ч�� & max_cnt ����
-                        // ���ȼ���SW0 > SW1 > SW2 > SW3
+                    // 优先：计算结果直接输出
+                    if (output_result_flag) begin
+                        output_from_result <= 1;
+                        out_rows <= result_rows;
+                        out_cols <= result_cols;
+                        rd_idx <= 0; r_cnt <= 0; c_cnt <= 0;
+                        tx_state <= T_LOAD_NUM;
+                    end
+                    // 其次：手动按钮触发打印存储的矩阵
+                    else if(trig_pos) begin
+                        output_from_result <= 0;
+                        // 检查开关选择 & 矩阵有效性 & max_cnt 限制
                         if(sw_select[0] && valid_mask[0] && max_cnt >= 1) begin
-                            rd_ptr <= 0; tx_state <= T_PRINT_NUM;
+                            rd_ptr <= 0; out_rows <= stored_m[0]; out_cols <= stored_n[0]; tx_state <= T_LOAD_NUM;
                         end else if(sw_select[1] && valid_mask[1] && max_cnt >= 2) begin
-                            rd_ptr <= 1; tx_state <= T_PRINT_NUM;
+                            rd_ptr <= 1; out_rows <= stored_m[1]; out_cols <= stored_n[1]; tx_state <= T_LOAD_NUM;
                         end else if(sw_select[2] && valid_mask[2] && max_cnt >= 3) begin
-                            rd_ptr <= 2; tx_state <= T_PRINT_NUM;
+                            rd_ptr <= 2; out_rows <= stored_m[2]; out_cols <= stored_n[2]; tx_state <= T_LOAD_NUM;
                         end else if(sw_select[3] && valid_mask[3] && max_cnt >= 4) begin
-                            rd_ptr <= 3; tx_state <= T_PRINT_NUM;
+                            rd_ptr <= 3; out_rows <= stored_m[3]; out_cols <= stored_n[3]; tx_state <= T_LOAD_NUM;
                         end
-                        // ��ʼ����ӡ������
                         rd_idx <= 0; r_cnt <= 0; c_cnt <= 0;
                     end
                 end
 
-                T_PRINT_NUM: begin
-                    tx_data <= matrix_mem[rd_ptr][rd_idx] + "0"; // תASCII
-                    tx_start <= 1; tx_state <= T_WAIT_NUM;
+                // 加载数值并分解为百位、十位、个位
+                T_LOAD_NUM: begin
+                    if (output_from_result) begin
+                        // 从计算结果缓存读取
+                        print_val <= result_mem[rd_idx];
+                        digit_h <= result_mem[rd_idx] / 100;
+                        digit_t <= (result_mem[rd_idx] % 100) / 10;
+                        digit_u <= result_mem[rd_idx] % 10;
+                        skip_h <= (result_mem[rd_idx] < 100);
+                        skip_t <= (result_mem[rd_idx] < 10);
+                    end else begin
+                        // 从矩阵存储器读取
+                        print_val <= matrix_mem[rd_ptr][rd_idx];
+                        digit_h <= matrix_mem[rd_ptr][rd_idx] / 100;
+                        digit_t <= (matrix_mem[rd_ptr][rd_idx] % 100) / 10;
+                        digit_u <= matrix_mem[rd_ptr][rd_idx] % 10;
+                        skip_h <= (matrix_mem[rd_ptr][rd_idx] < 100);
+                        skip_t <= (matrix_mem[rd_ptr][rd_idx] < 10);
+                    end
+                    tx_state <= T_PRINT_H;
                 end
-                
-                T_WAIT_NUM: if(!tx_busy) tx_state <= T_PRINT_SP;
 
+                // 打印百位（跳过前导零）
+                T_PRINT_H: begin
+                    if (skip_h) begin
+                        tx_state <= T_PRINT_T;
+                    end else begin
+                        tx_data <= digit_h + "0";
+                        tx_start <= 1;
+                        tx_state <= T_WAIT_H;
+                    end
+                end
+                T_WAIT_H: if(!tx_busy) tx_state <= T_PRINT_T;
+
+                // 打印十位（跳过前导零）
+                T_PRINT_T: begin
+                    if (skip_t) begin
+                        tx_state <= T_PRINT_U;
+                    end else begin
+                        tx_data <= digit_t + "0";
+                        tx_start <= 1;
+                        tx_state <= T_WAIT_T;
+                    end
+                end
+                T_WAIT_T: if(!tx_busy) tx_state <= T_PRINT_U;
+
+                // 打印个位（始终打印）
+                T_PRINT_U: begin
+                    tx_data <= digit_u + "0";
+                    tx_start <= 1;
+                    tx_state <= T_WAIT_U;
+                end
+                T_WAIT_U: if(!tx_busy) tx_state <= T_PRINT_SP;
+
+                // 打印空格
                 T_PRINT_SP: begin
-                    tx_data <= " "; tx_start <= 1; tx_state <= T_WAIT_SP;
+                    tx_data <= " ";
+                    tx_start <= 1;
+                    tx_state <= T_WAIT_SP;
                 end
 
                 T_WAIT_SP: begin
                     if(!tx_busy) begin
-                        // �н���?
-                        if(c_cnt == stored_n[rd_ptr] - 1) tx_state <= T_PRINT_CR;
+                        if(c_cnt == out_cols - 1) tx_state <= T_PRINT_CR;
                         else begin
-                            c_cnt <= c_cnt + 1; rd_idx <= rd_idx + 1; tx_state <= T_PRINT_NUM;
+                            c_cnt <= c_cnt + 1;
+                            rd_idx <= rd_idx + 1;
+                            tx_state <= T_LOAD_NUM;
                         end
                     end
                 end
@@ -376,14 +478,24 @@ module matrix_io_ctrl(
 
                 T_WAIT_LF: begin
                     if(!tx_busy) begin
-                        // �н���?
-                        if(r_cnt == stored_m[rd_ptr] - 1) tx_state <= T_IDLE; // ��ӡ���
-                        else begin
-                            c_cnt <= 0; r_cnt <= r_cnt + 1; rd_idx <= rd_idx + 1; tx_state <= T_PRINT_NUM;
+                        if(r_cnt == out_rows - 1) begin
+                            // 打印完成，清除标志
+                            output_from_result <= 0;
+                            tx_state <= T_IDLE;
+                        end else begin
+                            c_cnt <= 0;
+                            r_cnt <= r_cnt + 1;
+                            rd_idx <= rd_idx + 1;
+                            tx_state <= T_LOAD_NUM;
                         end
                     end
                 end
             endcase
+            
+            // 清除输出触发标志（在开始输出后）
+            if (output_result_flag && tx_state != T_IDLE) begin
+                output_result_flag <= 0;
+            end
         end
     end
     

@@ -70,10 +70,12 @@ always @(posedge clk or negedge rst_n) begin
                 if (start) begin
                     if (operation_type > 3'd3) begin
                         error <= 1'b1;
+                        done <= 1'b1;  // ← 添加这行！
                         current_state <= IDLE;
                     end else begin
                         if (a_rows == 0 || a_cols == 0) begin
                             error <= 1'b1;
+                            done <= 1'b1;  // ← 添加这行！
                             current_state <= IDLE;
                         end else begin
                             current_state <= LOAD_DATA;
@@ -95,6 +97,7 @@ always @(posedge clk or negedge rst_n) begin
                     3'd1: begin
                         if (matrix_a_dim != matrix_b_dim || b_rows == 0 || b_cols == 0) begin
                             error <= 1'b1;
+                            done <= 1'b1;  // ← 添加这行！
                             current_state <= IDLE;
                         end else begin
                             current_state <= CALCULATE;
@@ -106,6 +109,7 @@ always @(posedge clk or negedge rst_n) begin
                     3'd3: begin
                         if (a_cols != b_rows || b_rows == 0 || b_cols == 0) begin
                             error <= 1'b1;
+                            done <= 1'b1;  // ← 添加这行！
                             current_state <= IDLE;
                         end else begin
                             current_state <= CALCULATE;
@@ -154,10 +158,9 @@ always @(posedge clk or negedge rst_n) begin
                                 if (k_cnt < a_cols) begin
                                     mul_acc <= mul_acc + mat_a[row_cnt * a_cols + k_cnt] * mat_b[k_cnt * b_cols + col_cnt];
                                     k_cnt <= k_cnt + 1'b1;
-                                end else if (k_cnt == a_cols) begin
-                                    res_mat[row_cnt * b_cols + col_cnt] <= mul_acc;
-                                    k_cnt <= k_cnt + 1'b1;
                                 end else begin
+                                    // k_cnt == a_cols: 累加完成，存储结果并移动到下一个元素
+                                    res_mat[row_cnt * b_cols + col_cnt] <= mul_acc;
                                     mul_acc <= 16'd0;
                                     k_cnt <= 5'd0;
                                     col_cnt <= col_cnt + 1'b1;
